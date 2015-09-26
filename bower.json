@@ -1,0 +1,35 @@
+{
+  "name": "hairdresser",
+  "version": "0.1.0",
+  "description": "A universal javascript library for `<head>` element manipulation",
+  "homepage": "https://github.com/pawsong/hairdresser",
+  "authors": [
+    "Giff Song <giff.song@gmail.com>"
+  ],
+  "main": [
+    "dist/Hairdresser.min.js"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "head",
+    "document",
+    "meta",
+    "link",
+    "title",
+    "angular",
+    "react"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "examples",
+    "docs"
+  ]
+}

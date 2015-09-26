@@ -12,7 +12,7 @@ module.exports = {
   },
 
   output: {
-    path: './build',
+    path: './dist',
     filename: '[name].js',
     library: 'Hairdresser',
     libraryTarget: 'umd',
