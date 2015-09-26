@@ -33,7 +33,7 @@
     "build:umd:min": "webpack --config webpack/production.config.js",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "docs:build": "jsdoc src -d .jsdoc -c ./jsdoc.json",
-    "docs:publish": "npm run docs:bulid && gh-pages -d .jsdoc",
+    "docs:publish": "npm run docs:build && gh-pages -d .jsdoc",
     "preversion": "npm run clean && npm test",
     "version": "npm run build",
     "postversion": "git push && git push --tags && npm run clean && npm run docs:publish",
