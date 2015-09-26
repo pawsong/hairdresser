@@ -58,7 +58,7 @@ export default class Hairdresser {
    * Hairdresser constructor.
    *
    * @constructs Hairdresser
-   * @returns {Hairdresser} a new Hairdresser instance.
+   * @return {Hairdresser} a new Hairdresser instance.
    */
   constructor() {
     const topControllers = this._topControllers = {
@@ -102,7 +102,7 @@ export default class Hairdresser {
      *
      * @class Override
      * @param {object} options Override options.
-     * @returns {Override} a new Override instance.
+     * @return {Override} a new Override instance.
      */
     function Override(options) {
       invariant(!options.addListener || options.removeListener,
@@ -165,7 +165,7 @@ export default class Hairdresser {
      * Add controller for `<title>` element.
      *
      * @memberof Override
-     * @param {*} render A string which replaces <title> value or a function
+     * @param {*} render A string which replaces `<title>` value or a function
      * that returns the title replacing string value.
      * @param {object} options Options for element controller.
      * @param {addListener} options.addListener A function that adds controller

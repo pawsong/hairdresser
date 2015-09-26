@@ -37,7 +37,7 @@ export default class Controller extends LinkedListNode {
    * listener to event emitter.
    * @param {removeListener} options.removeListener A function that removes
    * controller listener.
-   * @returns {Controller} a new Controller instance.
+   * @return {Controller} a new Controller instance.
    */
   constructor(type, tagName, attrs, render, options = {}) {
     super();
