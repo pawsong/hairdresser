@@ -1,5 +1,10 @@
 # Hairdresser
-A universal javascript library for `<head>` element manipulation
+
+  A universal javascript library for `<head>` element manipulation
+  
+  [![NPM Version][npm-image]][npm-url]
+  [![Build Status][travis-image]][travis-url]
+  [![Coverage Status][coveralls-image]][coveralls-url]
 
 ```javascript
 var hairdresser = Hairdresser.create();
@@ -199,3 +204,10 @@ Refer to [Roadmap documentation](/ROADMAP.md)
 
 # License
 MIT
+
+[npm-image]: https://img.shields.io/npm/v/hairdresser.svg
+[npm-url]: https://npmjs.org/package/hairdresser
+[travis-image]: https://travis-ci.org/pawsong/hairdresser.svg
+[travis-url]: https://travis-ci.org/pawsong/hairdresser
+[coveralls-image]: https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&service=github
+[coveralls-url]: https://coveralls.io/github/pawsong/hairdresser?branch=master
