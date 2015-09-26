@@ -3,4 +3,6 @@ node_js:
   - "4.0.0"
 sudo: false
 script:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
   - npm test
