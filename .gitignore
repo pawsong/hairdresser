@@ -9,5 +9,5 @@ node_modules
 
 # Built files
 .coverage/
-docs/api/
+.jsdoc/
 build/
