@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Hairdresser</h1><p>  A universal javascript library for <code>&lt;head&gt;</code> element manipulation</p>
+<p>  <a href="https://npmjs.org/package/hairdresser"><img src="https://img.shields.io/npm/v/hairdresser.svg" alt="NPM Version"></a>
+  <a href="https://travis-ci.org/pawsong/hairdresser"><img src="https://travis-ci.org/pawsong/hairdresser.svg" alt="Build Status"></a>
+  <a href="https://coveralls.io/github/pawsong/hairdresser?branch=master"><img src="https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a></p>
+<pre class="prettyprint source lang-javascript"><code>var hairdresser = Hairdresser.create();
+hairdresser.override()
+  .title('Hairdresser')
+  .meta({ property: 'og:title' }, { content: 'Hairdresser' });
+
+hairdresser.render();</code></pre><h1>Features</h1><ul>
+<li>Manages <code>&lt;head&gt;</code>'s child elements (ex. <code>&lt;title&gt;</code>, <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code>)</li>
+<li>Hierarchical state friendly API</li>
+<li>Server-side rendering</li>
+</ul>
+<h1>Motivation</h1><h2>Independence from framework</h2><p>There are already good projects for managing <code>&lt;title&gt;</code>, <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code> elements. Following are some of the projects:</p>
+<ul>
+<li><a href="https://github.com/apparentlymart/angularjs-viewhead">angularjs-viewhead</a></li>
+<li><a href="https://github.com/iktw/ngPageHeadMeta">ngPageHeadMeta</a></li>
+<li><a href="https://github.com/nfl/react-helmet">react-helmet</a></li>
+<li><a href="https://github.com/gaearon/react-document-title">react-document-title</a></li>
+<li><a href="https://github.com/didacte/ember-meta-meta">ember-meta-meta</a></li>
+</ul>
+<p>Most of the projects depend on client-side frameworks like AngularJS or ReactJS. Using frameworks can make code shorter and simpler, but it also costs flexibility and maintainability. I think the cost exceeds the benefit. There are good framework independent libraries for <a href="https://github.com/RubaXa/Sortable">sortable UI </a> and <a href="https://github.com/bevacqua/dragula">drag and drop</a>. Why not for <code>&lt;head&gt;</code> manipulation?</p>
+<h2>Hierarchical state friendly API</h2><p>As <code>&lt;head&gt;</code>'s child elements represent state of the app, <code>&lt;head&gt;</code> manager should receive state change events and change <code>&lt;head&gt;</code> rendering function properly. For example, an app uses app name for <code>&lt;title&gt;</code> on root state, and uses title of the article for <code>&lt;title&gt;</code> on article showing state.</p>
+<p>In most cases, app uses hierarchical state like this:</p>
+<blockquote>
+<p>Root &gt; Category &gt; Sub category &gt; Article List</p>
+</blockquote>
+<p>Hierarchical architecture is popular (ex. file system), and can take advantage of URL's hierarchical representation. In fact, the strength of hierarchical state is not important. The thing is, hierarchical state is common for web apps and <code>&lt;head&gt;</code> manager should offer hierarchical state friendly API.</p>
+<h1>How to use</h1><h2>1. Get started with default values</h2><p>Let's start by creating a Hairdresser instance.</p>
+<pre class="prettyprint source lang-javascript"><code>// With new operator
+var hairdresser = new Hairdresser();
+
+// Or with static function
+var hairdresser = Hairdresser.create();</code></pre><p>Hairdresser manages one controller per DOM element in an override fashion. A controller defines when and how to render an element. To set default values, just call <code>hairdresser.override</code> and pass <code>render</code> parameter per element. <code>render</code> parameter is the first parameter of <code>title</code> method and the second parameter of <code>meta</code> and <code>link</code> methods.</p>
+<pre class="prettyprint source lang-javascript"><code>hairdresser.override()
+  .title('Hairdresser')
+  .meta({ name: 'title' }, { content: 'Hairdresser' })
+  .link({ rel: 'canonical' }, { href: 'https://example.com' });</code></pre><p>This is <code>&lt;head&gt;</code> inner HTML that the above code expects.</p>
+<pre class="prettyprint source lang-html"><code>&lt;!-- Alphabetical order -->
+&lt;link rel=&quot;canonical&quot; href=&quot;https://example.com&quot;>&lt;/meta>
+&lt;meta name=&quot;title&quot; content=&quot;Hairdresser&quot;>&lt;/meta>
+&lt;title>Hairdresser&lt;/title></code></pre><p><code>render</code> parameter can be a value which replaces element content or a function that returns the element replacing value. For example, following two examples change element in the same way.</p>
+<pre class="prettyprint source lang-javascript"><code>// Example1 - Use static primitive string value.
+hairdresser.override()
+  .title('Hairdresser');
+
+// Example2 - Use dynamic function return value.
+hairdresser.override()
+  .title(function () {
+    return 'Hairdresser';
+  });</code></pre><p>As for <code>&lt;title&gt;</code>, there is no need of a selector because only one <code>&lt;title&gt;</code> can exist. <code>render</code> parameter of <code>&lt;title&gt;</code> should be or return a string value because title is string.</p>
+<p>In case of <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code>, there can be multiple elements with the same tag name in DOM, so a selector is required. The first argument of <code>meta</code> and <code>link</code> function is the selector, which represents key-value attribute pairs. Similarly, <code>render</code> parameter of <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code> should be or return an object as key-value attribute pairs.</p>
+<p>Now we should call <code>hairdresser.render</code> in order to make Hairdresser start manipulating DOM.</p>
+<pre class="prettyprint source lang-javascript"><code>hairdresser.render();</code></pre><h2>2. Override controllers on state transition</h2><p>When application state changes, you may want to change a controller to handle an element. For example, you want to set <code>&lt;title&gt;</code> to the default value on the main page, and want to set <code>&lt;title&gt;</code> to article title on article page. Then, you can override the controller for <code>&lt;title&gt;</code> like this:</p>
+<pre class="prettyprint source lang-javascript"><code>var article = {
+  title: 'My awesome article'
+};
+
+var override = hairdresser.override()
+  .title(function () {
+    return article.title;
+  });
+
+// Cancel override on leaving the article page.
+onLeaveState(function () {
+  override.cancel();
+});</code></pre><p>Now <code>&lt;title&gt;</code> is set to article's title, <code>My awesome article</code>. You can go back to the previous controller by calling <code>cancel</code> method.</p>
+<p>In case of hierarchical state, you can override a controller multiple times when you traverse down multiple child states.</p>
+<h2>3. Trigger update</h2><p>You can update <code>&lt;head&gt;</code> element in two ways.</p>
+<p>One is manual function call. <code>override.update</code> updates all the elements in <code>override</code>.</p>
+<pre class="prettyprint source lang-javascript"><code>var override = hairdresser.override()
+  .title(getTitle);
+
+onDataReceived(function () {
+
+  // Manual update
+  override.update();
+});</code></pre><p>The other one is using event listeners. A listener can be added to <code>override</code> and each element.</p>
+<pre class="prettyprint source lang-javascript"><code>// Use fbemitter (https://github.com/facebook/emitter)
+var emitter = new EventEmitter();
+
+// Listener per override
+var override = hairdresser.override({
+  addListener: function (callback) {
+    return emitter.addListener('update.override', callback);
+  },
+  removeListener: function (token) {
+    token.remove();
+  },
+}).title(getTitle);
+
+emitter.emit('update.override');
+
+// Listener per element
+var override = hairdresser.override()
+  .title(getTitle, {
+    addListener: function (callback) {
+      return emitter.addListener('update.title', callback);
+    },
+    removeListener: function (token) {
+      token.remove();
+    });
+  });
+
+emitter.emit('update.title');</code></pre><h2>4. Render to DOM or string</h2><p>This library is <a href="https://medium.com/@mjackson/universal-javascript-4761051b7ae9">universal</a>. You can modify <code>&lt;head&gt;</code> DOM element on browser.</p>
+<pre class="prettyprint source lang-javascript"><code>var hairdresser = Hairdresser.create();
+hairdresser.override().title('Hairdresser');
+
+// render() will render `&lt;head>` DOM element,
+// and watch further overrides.
+hairdresser.render();</code></pre><p>You can also get elements as a string value.</p>
+<pre class="prettyprint source lang-javascript"><code>var hairdresser = Hairdresser.create();
+hairdresser.override().title('Hairdresser');
+
+var head = hairdresser.renderToString();
+assert(head === '&lt;title>Hairdresser&lt;/title>');</code></pre><h1>API</h1><p>Refer to <a href="https://pawsong.github.io/hairdresser">API documentation</a></p>
+<h1>Roadmap</h1><p>Refer to <a href="/ROADMAP.md">Roadmap documentation</a></p>
+<h1>Examples</h1><ul>
+<li><a href="/examples/angular">angular</a></li>
+<li><a href="/examples/react">react</a></li>
+</ul>
+<h1>License</h1><p>MIT</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Controller.html">Controller</a></li><li><a href="Hairdresser.html">Hairdresser</a></li><li><a href="Override.html">Override</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Sat Sep 26 2015 23:20:32 GMT+0900 (KST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
