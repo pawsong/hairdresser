@@ -1,5 +1,8 @@
 # Hairdresser
-A universal javascript library for `<head>` element manipulation
+
+  A universal javascript library for `<head>` element manipulation
+  
+  [![Coverage Status](https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&service=github)](https://coveralls.io/github/pawsong/hairdresser?branch=master)
 
 ```javascript
 var hairdresser = Hairdresser.create();
