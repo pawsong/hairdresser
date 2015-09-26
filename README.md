@@ -5,6 +5,8 @@
   [![NPM Version][npm-image]][npm-url]
   [![Build Status][travis-image]][travis-url]
   [![Coverage Status][coveralls-image]][coveralls-url]
+  [![Dependency Status][dependency-image]][dependency-url]
+  [![devDependency Status][devDependency-image]][devDependency-url]
 
 ```javascript
 var hairdresser = Hairdresser.create();
@@ -211,3 +213,8 @@ MIT
 [travis-url]: https://travis-ci.org/pawsong/hairdresser
 [coveralls-image]: https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&service=github
 [coveralls-url]: https://coveralls.io/github/pawsong/hairdresser?branch=master
+
+[dependency-image]: https://david-dm.org/pawsong/hairdresser.svg
+[dependency-url]: https://david-dm.org/pawsong/hairdresser
+[devDependency-image]: https://david-dm.org/pawsong/hairdresser/dev-status.svg
+[devDependency-url]: https://david-dm.org/pawsong/hairdresser#info=devDependencies
