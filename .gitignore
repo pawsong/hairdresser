@@ -10,5 +10,4 @@ node_modules
 # Built files
 .coverage/
 docs/api/
-lib/
 build/
