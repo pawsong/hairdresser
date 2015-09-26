@@ -187,7 +187,7 @@ assert(head === '<title>Hairdresser</title>');
 
 # API
 
-Refer to [API documentation](/docs/api/index.html)
+Refer to [API documentation](https://pawsong.github.io/hairdresser)
 
 # Roadmap
 
