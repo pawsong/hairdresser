@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-xs-4">
+    <div class="page-header">
+      <h2>Routes</h2>
+    </div>
+    <div class="list-group">
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.home">/</a>
+
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.override">/override</a>
+
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.override.child">/override/child</a>
+
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.override.child.grandchild">/override/child/grandchild</a>
+
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.async">/async</a>
+
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.asyncPerElement">/async-per-element</a>
+
+      <a class="list-group-item" ui-sref-active-eq="active"
+        ui-sref="root.dynamic">/dynamic</a>
+    </div>
+  </div>
+  <div class="col-xs-8">
+    <div class="page-header">
+      <h2>Contents</h2>
+    </div>
+    <div ui-view class="well well-lg"></div>
+  </div>
+</div>

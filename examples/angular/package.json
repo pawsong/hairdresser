@@ -1,0 +1,25 @@
+{
+  "name": "hairdresser-example-angular",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "cd .. && npm install"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.17.0",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.12.1",
+    "webpack-dev-server": "^1.10.1"
+  },
+  "dependencies": {
+    "angular": "^1.4.5",
+    "angular-sanitize": "^1.4.5",
+    "angular-ui-router": "^0.2.15",
+    "highlight.js": "^8.8.0"
+  }
+}

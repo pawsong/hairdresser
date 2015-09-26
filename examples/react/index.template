@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!--
+      Server renders <title>, <meta>, <link> tag strings with hairdresser,
+      and they will be injected here.
+    -->
+    <%= head %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h1>Hairdresser ReactJS Example</h1>
+      <div class="row">
+        <div class="col-xs-6">
+          <div id="content"><%= body %></div>
+        </div>
+
+        <div class="col-xs-6">
+          <div class="page-header">
+            <h2>Head</h2>
+          </div>
+          <div id="headmonitor"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="http://localhost:8080/webpack-dev-server.js"></script>
+    <script src="/bundle.js"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+  <body ng-app="hairdresserExample">
+    <!-- Contents -->
+    <div class="container-fluid">
+      <h1>Hairdresser AngularJS Example</h1>
+      <div class="row">
+        <div class="col-xs-6">
+          <div ui-view></div>
+        </div>
+        <div class="col-xs-6">
+          <div class="page-header">
+            <h2>Head</h2>
+          </div>
+          <div ui-view="headmonitor"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="http://localhost:8080/webpack-dev-server.js"></script>
+    <script src="bundle.js"></script>
+  </body>
+</html>
