@@ -2,6 +2,7 @@
 
   A universal javascript library for `<head>` element manipulation
   
+  [![Build Status](https://travis-ci.org/pawsong/hairdresser.svg)](https://travis-ci.org/pawsong/hairdresser)
   [![Coverage Status](https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&service=github)](https://coveralls.io/github/pawsong/hairdresser?branch=master)
 
 ```javascript
