@@ -1,7 +1,7 @@
 {
   "name": "hairdresser",
   "version": "0.1.2",
-  "description": "A universal javascript library for `<head>` element manipulation",
+  "description": "A universal js library for managing head DOM elements (title, link, and meta)",
   "homepage": "https://github.com/pawsong/hairdresser",
   "authors": [
     "Giff Song <giff.song@gmail.com>"

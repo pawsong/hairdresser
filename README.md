@@ -1,7 +1,7 @@
 # Hairdresser
 
-  A universal javascript library for `<head>` element manipulation
-  
+  A universal js library for managing head DOM elements (title, link and meta)
+
   [![NPM Version][npm-image]][npm-url]
   [![Build Status][travis-image]][travis-url]
   [![Coverage Status][coveralls-image]][coveralls-url]

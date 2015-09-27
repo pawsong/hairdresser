@@ -1,7 +1,7 @@
 {
   "name": "hairdresser",
   "version": "0.1.2",
-  "description": "A universal javascript library for head DOM element manipulation",
+  "description": "A universal js library for managing head DOM elements (title, link, and meta)",
   "main": "lib/Hairdresser.js",
   "jsnext:main": "src/Hairdresser.js",
   "author": "Giff Song <giff.song@gmail.com> (http://github.com/pawsong)",
