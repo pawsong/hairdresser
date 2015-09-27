@@ -1,6 +1,6 @@
 {
   "name": "hairdresser",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A universal javascript library for head DOM element manipulation",
   "main": "lib/Hairdresser.js",
   "jsnext:main": "src/Hairdresser.js",
