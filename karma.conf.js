@@ -23,15 +23,8 @@ module.exports = function(config) { // eslint-disable-line func-names
     basePath: '',
 
     frameworks: [
-      'mocha',
-      'sinon',
+      'jasmine',
     ],
-
-    client: {
-      mocha: {
-        bail: true,
-      },
-    },
 
     files: [
       'node_modules/phantomjs-polyfill/bind-polyfill.js',

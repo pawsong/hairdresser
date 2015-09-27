@@ -3,7 +3,7 @@
   "env": {
     "browser": true,
     "node": true,
-    "mocha": true
+    "jasmine": true
   },
   "rules": {
     "valid-jsdoc": 2,

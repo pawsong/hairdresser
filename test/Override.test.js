@@ -1,7 +1,3 @@
-/* global sinon */
-
-import {expect} from 'chai';
-
 import {EventEmitter} from 'fbemitter';
 
 import Hairdresser from '../src/Hairdresser';
@@ -14,7 +10,7 @@ describe('Override', () => {
       hairdresser.override({
         addListener: () => '',
       });
-    }).to.throw('addListener requires removeListener');
+    }).toThrowError('Invariant Violation: addListener requires removeListener');
   });
 
   describe('listener', () => {
@@ -26,23 +22,23 @@ describe('Override', () => {
         },
       });
 
-      const addListener = sinon.spy();
-      const removeListener = sinon.spy();
+      const addListener = jasmine.createSpy();
+      const removeListener = jasmine.createSpy();
 
       hairdresser.override({
         addListener,
         removeListener,
       }).title('');
-      expect(addListener.callCount).to.equal(1);
-      expect(removeListener.callCount).to.equal(0);
+      expect(addListener.calls.count()).toBe(1);
+      expect(removeListener.calls.count()).toBe(0);
 
       const override = hairdresser.override().title('');
-      expect(addListener.callCount).to.equal(1);
-      expect(removeListener.callCount).to.equal(1);
+      expect(addListener.calls.count()).toBe(1);
+      expect(removeListener.calls.count()).toBe(1);
 
       override.restore();
-      expect(addListener.callCount).to.equal(2);
-      expect(removeListener.callCount).to.equal(1);
+      expect(addListener.calls.count()).toBe(2);
+      expect(removeListener.calls.count()).toBe(1);
     });
 
     it('should receive and redirect events to controllers', () => {
@@ -55,20 +51,20 @@ describe('Override', () => {
         },
       });
 
-      const render = sinon.spy();
+      const render = jasmine.createSpy();
       hairdresser.override({
         addListener: callback => emitter.addListener('event', callback),
         removeListener: token => token.remove(),
       }).title(render);
-      expect(render.callCount).to.equal(1);
+      expect(render.calls.count()).toBe(1);
 
       emitter.emit('event');
-      expect(render.callCount).to.equal(2);
+      expect(render.calls.count()).toBe(2);
 
       hairdresser.override().title('');
 
       emitter.emit('event');
-      expect(render.callCount).to.equal(2);
+      expect(render.calls.count()).toBe(2);
     });
   });
 
@@ -82,7 +78,7 @@ describe('Override', () => {
         .meta({}, {});
 
       const controller = override.getController('title');
-      expect(controller).to.be.an.instanceof(Controller);
+      expect(controller).toEqual(jasmine.any(Controller));
     });
 
     it('should return null when controller does not exist', () => {
@@ -90,7 +86,7 @@ describe('Override', () => {
       const override = hairdresser.override();
 
       const controller = override.getController('title');
-      expect(controller).to.be.a('null');
+      expect(controller).toBe(null);
     });
   });
 
@@ -101,7 +97,7 @@ describe('Override', () => {
 
       expect(() => {
         override.addController(Controller.CTRL_TYPE.TITLE, 'title');
-      }).to.throw('Invariant Violation: render value for <title> must be a string');
+      }).toThrowError('Invariant Violation: render value for <title> must be a string');
     });
 
     it('should throw error when addListener option is passed without removeListener', () => {
@@ -112,7 +108,7 @@ describe('Override', () => {
         override.addController(Controller.CTRL_TYPE.TITLE, 'title', {}, () => '', {
           addListener: () => '',
         });
-      }).to.throw('addListener requires removeListener');
+      }).toThrowError('Invariant Violation: addListener requires removeListener');
     });
 
     it('should override controller', () => {
@@ -123,22 +119,22 @@ describe('Override', () => {
       override1.addController(Controller.CTRL_TYPE.TITLE, 'title', {}, () => 'title1');
 
       const controller1 =  override1.getController('title');
-      expect(controller1.render()).to.equal('title1');
+      expect(controller1.render()).toBe('title1');
 
       expect(
         hairdresser._getActiveController('title')
-      ).to.equal(controller1);
+      ).toBe(controller1);
 
       // Override
       const override2 = hairdresser.override();
       override2.addController(Controller.CTRL_TYPE.TITLE, 'title', {}, () => 'title2');
 
       const controller2 =  override2.getController('title');
-      expect(controller2.render()).to.equal('title2');
+      expect(controller2.render()).toBe('title2');
 
       expect(
         hairdresser._getActiveController('title')
-      ).to.equal(controller2);
+      ).toBe(controller2);
     });
 
     it('should return itself', () => {
@@ -147,7 +143,7 @@ describe('Override', () => {
 
       const ret = override.addController(Controller.CTRL_TYPE.TITLE,
                                          'title', {}, () => 'title2');
-      expect(ret).to.equal(override);
+      expect(ret).toBe(override);
     });
   });
 
@@ -160,22 +156,22 @@ describe('Override', () => {
       override1.title('title1');
 
       const controller1 =  override1.getController('title');
-      expect(controller1.render()).to.equal('title1');
+      expect(controller1.render()).toBe('title1');
 
       expect(
         hairdresser._getActiveController('title')
-      ).to.equal(controller1);
+      ).toBe(controller1);
 
       // Override
       const override2 = hairdresser.override();
       override2.title('title2');
 
       const controller2 =  override2.getController('title');
-      expect(controller2.render()).to.equal('title2');
+      expect(controller2.render()).toBe('title2');
 
       expect(
         hairdresser._getActiveController('title')
-      ).to.equal(controller2);
+      ).toBe(controller2);
     });
   });
 
@@ -188,22 +184,22 @@ describe('Override', () => {
       override1.meta({ name: 'value' }, {});
 
       const controller1 =  override1.getController('meta', { name: 'value' });
-      expect(controller1.render()).to.deep.equal({});
+      expect(controller1.render()).toEqual({});
 
       expect(
         hairdresser._getActiveController('meta', { name: 'value' })
-      ).to.equal(controller1);
+      ).toBe(controller1);
 
       // Override
       const override2 = hairdresser.override();
       override2.meta({ name: 'value' }, {});
 
       const controller2 =  override2.getController('meta', { name: 'value' });
-      expect(controller2.render()).to.deep.equal({});
+      expect(controller2.render()).toEqual({});
 
       expect(
         hairdresser._getActiveController('meta', { name: 'value' })
-      ).to.equal(controller2);
+      ).toBe(controller2);
     });
   });
 
@@ -216,22 +212,22 @@ describe('Override', () => {
       override1.link({ name: 'value' }, {});
 
       const controller1 =  override1.getController('link', { name: 'value' });
-      expect(controller1.render()).to.deep.equal({});
+      expect(controller1.render()).toEqual({});
 
       expect(
         hairdresser._getActiveController('link', { name: 'value' })
-      ).to.equal(controller1);
+      ).toBe(controller1);
 
       // Override
       const override2 = hairdresser.override();
       override2.link({ name: 'value' }, {});
 
       const controller2 =  override2.getController('link', { name: 'value' });
-      expect(controller2.render()).to.deep.equal({});
+      expect(controller2.render()).toEqual({});
 
       expect(
         hairdresser._getActiveController('link', { name: 'value' })
-      ).to.equal(controller2);
+      ).toBe(controller2);
     });
   });
 
@@ -244,30 +240,30 @@ describe('Override', () => {
         },
       });
 
-      const render1 = sinon.spy();
+      const render1 = jasmine.createSpy();
       const override1 = hairdresser.override().title(render1);
-      expect(render1.callCount).to.equal(1);
+      expect(render1.calls.count()).toBe(1);
 
-      const render2 = sinon.spy();
+      const render2 = jasmine.createSpy();
       const override2 = hairdresser.override().title(render2);
-      expect(render1.callCount).to.equal(1);
-      expect(render2.callCount).to.equal(1);
+      expect(render1.calls.count()).toBe(1);
+      expect(render2.calls.count()).toBe(1);
 
       override1.update();
-      expect(render1.callCount).to.equal(1);
-      expect(render2.callCount).to.equal(1);
+      expect(render1.calls.count()).toBe(1);
+      expect(render2.calls.count()).toBe(1);
 
       override2.update();
-      expect(render1.callCount).to.equal(1);
-      expect(render2.callCount).to.equal(2);
+      expect(render1.calls.count()).toBe(1);
+      expect(render2.calls.count()).toBe(2);
     });
 
     it('should do nothing when override is added before #render', () => {
       const hairdresser = Hairdresser.create();
-      const render1 = sinon.spy();
+      const render1 = jasmine.createSpy();
       const override1 = hairdresser.override().title(render1);
 
-      const render2 = sinon.spy();
+      const render2 = jasmine.createSpy();
       const override2 = hairdresser.override().title(render2);
 
       hairdresser._renderAndListen({
@@ -276,16 +272,16 @@ describe('Override', () => {
         },
       });
 
-      expect(render1.callCount).to.equal(0);
-      expect(render2.callCount).to.equal(1);
+      expect(render1.calls.count()).toBe(0);
+      expect(render2.calls.count()).toBe(1);
 
       override1.update();
-      expect(render1.callCount).to.equal(0);
-      expect(render2.callCount).to.equal(1);
+      expect(render1.calls.count()).toBe(0);
+      expect(render2.calls.count()).toBe(1);
 
       override2.update();
-      expect(render1.callCount).to.equal(0);
-      expect(render2.callCount).to.equal(2);
+      expect(render1.calls.count()).toBe(0);
+      expect(render2.calls.count()).toBe(2);
     });
   });
 
@@ -303,38 +299,38 @@ describe('Override', () => {
 
       expect(
         hairdresser._getActiveController('title')
-      ).to.equal(controller2);
-      expect(controller2.prev).to.equal(controller1);
-      expect(controller1.next).to.equal(controller2);
+      ).toBe(controller2);
+      expect(controller2.prev).toBe(controller1);
+      expect(controller1.next).toBe(controller2);
 
       // Restore!
       override.restore();
 
       expect(
         hairdresser._getActiveController('title')
-      ).to.equal(controller1);
-      expect(controller2.prev).to.be.an('undefined');
-      expect(controller1.next).to.be.an('undefined');
+      ).toBe(controller1);
+      expect(controller2.prev).toBe(undefined);
+      expect(controller1.next).toBe(undefined);
     });
 
     it('should trigger onStop for controllers being removed', () => {
       const hairdresser = Hairdresser.create();
       const override = hairdresser.override().title('');
 
-      const onUpdate = sinon.spy();
-      const onStop = sinon.spy();
+      const onUpdate = jasmine.createSpy();
+      const onStop = jasmine.createSpy();
       hairdresser._renderAndListen({
         [Controller.CTRL_TYPE.TITLE]: {
           onUpdate,
           onStop,
         },
       });
-      expect(onUpdate.callCount).to.equal(1);
-      expect(onStop.callCount).to.equal(0);
+      expect(onUpdate.calls.count()).toBe(1);
+      expect(onStop.calls.count()).toBe(0);
 
       override.restore();
-      expect(onUpdate.callCount).to.equal(1);
-      expect(onStop.callCount).to.equal(1);
+      expect(onUpdate.calls.count()).toBe(1);
+      expect(onStop.calls.count()).toBe(1);
     });
 
     it('should trigger onUpdate for controllers being restored', () => {
@@ -345,15 +341,15 @@ describe('Override', () => {
         },
       });
 
-      const render = sinon.spy();
+      const render = jasmine.createSpy();
       hairdresser.override().title(render);
-      expect(render.callCount).to.equal(1);
+      expect(render.calls.count()).toBe(1);
 
       const override = hairdresser.override().title('');
-      expect(render.callCount).to.equal(1);
+      expect(render.calls.count()).toBe(1);
 
       override.restore();
-      expect(render.callCount).to.equal(2);
+      expect(render.calls.count()).toBe(2);
     });
 
     it('should remove listener for controllers being stored', () => {
@@ -366,18 +362,18 @@ describe('Override', () => {
 
       hairdresser.override().title('');
 
-      const addListener = sinon.spy();
-      const removeListener = sinon.spy();
+      const addListener = jasmine.createSpy();
+      const removeListener = jasmine.createSpy();
       const override = hairdresser.override().title('', {
         addListener,
         removeListener,
       });
-      expect(addListener.callCount).to.equal(1);
-      expect(removeListener.callCount).to.equal(0);
+      expect(addListener.calls.count()).toBe(1);
+      expect(removeListener.calls.count()).toBe(0);
 
       override.restore();
-      expect(addListener.callCount).to.equal(1);
-      expect(removeListener.callCount).to.equal(1);
+      expect(addListener.calls.count()).toBe(1);
+      expect(removeListener.calls.count()).toBe(1);
     });
 
     it('should remove controllers which is not listening', () => {
@@ -394,17 +390,17 @@ describe('Override', () => {
       const override2 = hairdresser.override().title('');
       const controller2 = override2.getController('title');
 
-      expect(controller1.prev).to.equal(undefined);
-      expect(controller1.next).to.equal(controller2);
-      expect(controller2.prev).to.equal(controller1);
-      expect(controller2.next).to.equal(undefined);
+      expect(controller1.prev).toBe(undefined);
+      expect(controller1.next).toBe(controller2);
+      expect(controller2.prev).toBe(controller1);
+      expect(controller2.next).toBe(undefined);
 
       override1.restore();
 
-      expect(controller1.prev).to.equal(undefined);
-      expect(controller1.next).to.equal(undefined);
-      expect(controller2.prev).to.equal(undefined);
-      expect(controller2.next).to.equal(undefined);
+      expect(controller1.prev).toBe(undefined);
+      expect(controller1.next).toBe(undefined);
+      expect(controller2.prev).toBe(undefined);
+      expect(controller2.next).toBe(undefined);
     });
 
     it('should ignore controllers which is added before #render', () => {
@@ -422,17 +418,17 @@ describe('Override', () => {
         },
       });
 
-      expect(controller1.prev).to.equal(undefined);
-      expect(controller1.next).to.equal(controller2);
-      expect(controller2.prev).to.equal(controller1);
-      expect(controller2.next).to.equal(undefined);
+      expect(controller1.prev).toBe(undefined);
+      expect(controller1.next).toBe(controller2);
+      expect(controller2.prev).toBe(controller1);
+      expect(controller2.next).toBe(undefined);
 
       override1.restore();
 
-      expect(controller1.prev).to.equal(undefined);
-      expect(controller1.next).to.equal(undefined);
-      expect(controller2.prev).to.equal(undefined);
-      expect(controller2.next).to.equal(undefined);
+      expect(controller1.prev).toBe(undefined);
+      expect(controller1.next).toBe(undefined);
+      expect(controller2.prev).toBe(undefined);
+      expect(controller2.next).toBe(undefined);
     });
   });
 });

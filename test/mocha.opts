@@ -1,4 +1,0 @@
---compilers js:babel/register
---require test/support/setup
---recursive
---bail

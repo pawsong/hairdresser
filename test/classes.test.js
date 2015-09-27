@@ -1,5 +1,3 @@
-import {expect} from 'chai';
-
 import LinkedListNode from '../src/classes/LinkedListNode';
 import Attrs from '../src/classes/Attrs';
 import Controller from '../src/classes/Controller';
@@ -13,21 +11,21 @@ describe('LinkedListNode', () => {
 
       nodeA.insertAfter(nodeB);
 
-      expect(nodeA.prev).to.equal(undefined);
-      expect(nodeA.next).to.equal(nodeB);
-      expect(nodeB.prev).to.equal(nodeA);
-      expect(nodeB.next).to.equal(undefined);
+      expect(nodeA.prev).toBe(undefined);
+      expect(nodeA.next).toBe(nodeB);
+      expect(nodeB.prev).toBe(nodeA);
+      expect(nodeB.next).toBe(undefined);
 
       // Insert into middle of list
       const nodeC = new LinkedListNode();
       nodeA.insertAfter(nodeC);
 
-      expect(nodeA.prev).to.equal(undefined);
-      expect(nodeA.next).to.equal(nodeC);
-      expect(nodeB.prev).to.equal(nodeC);
-      expect(nodeB.next).to.equal(undefined);
-      expect(nodeC.prev).to.equal(nodeA);
-      expect(nodeC.next).to.equal(nodeB);
+      expect(nodeA.prev).toBe(undefined);
+      expect(nodeA.next).toBe(nodeC);
+      expect(nodeB.prev).toBe(nodeC);
+      expect(nodeB.next).toBe(undefined);
+      expect(nodeC.prev).toBe(nodeA);
+      expect(nodeC.next).toBe(nodeB);
     });
   });
 
@@ -36,44 +34,44 @@ describe('LinkedListNode', () => {
       // prev does not exist, next does not exist
       const node00 = new LinkedListNode();
 
-      expect(node00.prev).to.equal(undefined);
-      expect(node00.next).to.equal(undefined);
+      expect(node00.prev).toBe(undefined);
+      expect(node00.next).toBe(undefined);
 
       node00.unlink();
-      expect(node00.prev).to.equal(undefined);
-      expect(node00.next).to.equal(undefined);
+      expect(node00.prev).toBe(undefined);
+      expect(node00.next).toBe(undefined);
 
       // prev does not exist, next exists
       const node01 = new LinkedListNode();
       const node01next = new LinkedListNode();
       node01.insertAfter(node01next);
 
-      expect(node01.prev).to.equal(undefined);
-      expect(node01.next).to.equal(node01next);
-      expect(node01next.prev).to.equal(node01);
-      expect(node01next.next).to.equal(undefined);
+      expect(node01.prev).toBe(undefined);
+      expect(node01.next).toBe(node01next);
+      expect(node01next.prev).toBe(node01);
+      expect(node01next.next).toBe(undefined);
 
       node01.unlink();
-      expect(node01.prev).to.equal(undefined);
-      expect(node01.next).to.equal(undefined);
-      expect(node01next.prev).to.equal(undefined);
-      expect(node01next.next).to.equal(undefined);
+      expect(node01.prev).toBe(undefined);
+      expect(node01.next).toBe(undefined);
+      expect(node01next.prev).toBe(undefined);
+      expect(node01next.next).toBe(undefined);
 
       // prev exists, next does not exist
       const node10prev = new LinkedListNode();
       const node10 = new LinkedListNode();
       node10prev.insertAfter(node10);
 
-      expect(node10prev.prev).to.equal(undefined);
-      expect(node10prev.next).to.equal(node10);
-      expect(node10.prev).to.equal(node10prev);
-      expect(node10.next).to.equal(undefined);
+      expect(node10prev.prev).toBe(undefined);
+      expect(node10prev.next).toBe(node10);
+      expect(node10.prev).toBe(node10prev);
+      expect(node10.next).toBe(undefined);
 
       node10.unlink();
-      expect(node10prev.prev).to.equal(undefined);
-      expect(node10prev.next).to.equal(undefined);
-      expect(node10.prev).to.equal(undefined);
-      expect(node10.next).to.equal(undefined);
+      expect(node10prev.prev).toBe(undefined);
+      expect(node10prev.next).toBe(undefined);
+      expect(node10.prev).toBe(undefined);
+      expect(node10.next).toBe(undefined);
 
       // prev exists, next exists
       const node11prev = new LinkedListNode();
@@ -82,20 +80,20 @@ describe('LinkedListNode', () => {
       node11prev.insertAfter(node11);
       node11.insertAfter(node11next);
 
-      expect(node11prev.prev).to.equal(undefined);
-      expect(node11prev.next).to.equal(node11);
-      expect(node11.prev).to.equal(node11prev);
-      expect(node11.next).to.equal(node11next);
-      expect(node11next.prev).to.equal(node11);
-      expect(node11next.next).to.equal(undefined);
+      expect(node11prev.prev).toBe(undefined);
+      expect(node11prev.next).toBe(node11);
+      expect(node11.prev).toBe(node11prev);
+      expect(node11.next).toBe(node11next);
+      expect(node11next.prev).toBe(node11);
+      expect(node11next.next).toBe(undefined);
 
       node11.unlink();
-      expect(node11prev.prev).to.equal(undefined);
-      expect(node11prev.next).to.equal(node11next);
-      expect(node11.prev).to.equal(undefined);
-      expect(node11.next).to.equal(undefined);
-      expect(node11next.prev).to.equal(node11prev);
-      expect(node11next.next).to.equal(undefined);
+      expect(node11prev.prev).toBe(undefined);
+      expect(node11prev.next).toBe(node11next);
+      expect(node11.prev).toBe(undefined);
+      expect(node11.next).toBe(undefined);
+      expect(node11next.prev).toBe(node11prev);
+      expect(node11next.next).toBe(undefined);
     });
   });
 });
@@ -109,7 +107,7 @@ describe('Attrs', () => {
         name3: 'value3',
       });
 
-      expect(ret).to.equal('name1="value1" name2="value2" name3="value3"');
+      expect(ret).toBe('name1="value1" name2="value2" name3="value3"');
     });
   });
 
@@ -125,13 +123,13 @@ describe('Attrs', () => {
 
       const keysIterated = [];
       attrs.each((name, value) => {
-        expect(data[name]).to.equal(value);
-        expect(value).to.equal(data[name]);
+        expect(data[name]).toBe(value);
+        expect(value).toBe(data[name]);
 
         keysIterated.push(name);
       });
 
-      expect(keysIterated).to.deep.equal(['name1', 'name2', 'name3']);
+      expect(keysIterated).toEqual(['name1', 'name2', 'name3']);
     });
 
     it('should iterate in alphabetical order', () => {
@@ -148,7 +146,7 @@ describe('Attrs', () => {
         keysIterated.push(name);
       });
 
-      expect(keysIterated).to.deep.equal(['name1', 'name2', 'name3']);
+      expect(keysIterated).toEqual(['name1', 'name2', 'name3']);
     });
 
     it('should stop iteration when callback returns false', () => {
@@ -168,8 +166,8 @@ describe('Attrs', () => {
       ret = attrs.each(name => {
         keysIterated.push(name);
       });
-      expect(ret).to.equal(true);
-      expect(keysIterated).to.deep.equal(['name1', 'name2', 'name3']);
+      expect(ret).toBe(true);
+      expect(keysIterated).toEqual(['name1', 'name2', 'name3']);
 
       // When stopped
       keysIterated = [];
@@ -179,8 +177,8 @@ describe('Attrs', () => {
         }
         keysIterated.push(name);
       });
-      expect(ret).to.equal(false);
-      expect(keysIterated).to.deep.equal(['name1']);
+      expect(ret).toBe(false);
+      expect(keysIterated).toEqual(['name1']);
     });
   });
 });
@@ -192,7 +190,7 @@ describe('Controller', () => {
     it('should throw an error when render function is missing', () => {
       expect(() => {
         new Controller();
-      }).to.throw('render function is required');
+      }).toThrowError('Invariant Violation: render function is required');
     });
 
     it('should throw an error when addListener is passed without removeListener', () => {
@@ -200,7 +198,7 @@ describe('Controller', () => {
         new Controller(Controller.TITLE, 'title', {}, () => '', {
           addListener: () => {},
         });
-      }).to.throw('addListener requires removeListener');
+      }).toThrowError('Invariant Violation: addListener requires removeListener');
     });
   });
 });
