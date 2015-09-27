@@ -6,6 +6,7 @@
   [![Linux Build][travis-image]][travis-url]
   [![Windows Build][appveyor-image]][appveyor-url]
   [![Coverage Status][coveralls-image]][coveralls-url]
+  
   [![Dependency Status][dependency-image]][dependency-url]
   [![devDependency Status][devDependency-image]][devDependency-url]
 
