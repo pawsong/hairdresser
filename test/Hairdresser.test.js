@@ -1,17 +1,10 @@
 import {EventEmitter} from 'fbemitter';
 
 import Hairdresser from '../src/Hairdresser';
-import Controller from '../src/classes/Controller';
 
 import {canUseDOM} from '../src/utils';
 
 describe('Hairdresser', () => {
-  describe('.Controller', () => {
-    it('should return Controller constructor', () => {
-      expect(Hairdresser.Controller).toBe(Controller);
-    });
-  });
-
   describe('.create', () => {
     it('should return an Hairdresser instance', () => {
       const hairdresser = Hairdresser.create();
@@ -97,9 +90,37 @@ describe('Hairdresser', () => {
       return;
     }
 
+    const head = document.getElementsByTagName('head')[0];
+
+    function resetHead() {
+      while (head.firstChild) {
+        head.removeChild(head.firstChild);
+      }
+    }
+
+    function getSortedHeadString() {
+      const children = [];
+      for (let i = 0; i < head.children.length; ++i) {
+        children.push(head.children[i]);
+      }
+      return children.map(child => {
+        if (child.tagName === 'TITLE') {
+          return `<title>${document.title}</title>`;
+        }
+
+        const attribs = [];
+        for (let i = 0; i < child.attributes.length; ++i) {
+          const attrib = child.attributes[i];
+          attribs.push(`${attrib.name}="${attrib.value}"`);
+        }
+
+        return `<${child.tagName.toLowerCase()} ${attribs.sort().join(' ')}>`;
+      }).sort().join('');
+    }
+
     beforeEach(() => {
       // Reset <head>
-      document.head.innerHTML = '';
+      resetHead();
     });
 
     it('should throw error when title controller returns non string value', () => {
@@ -155,9 +176,9 @@ describe('Hairdresser', () => {
       hairdresser.render();
 
       // Alphabetical order
-      expect(document.head.innerHTML).toBe(
-        '<link key="value" content="link value">' +
-        '<meta key="value" content="meta value">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="link value" key="value">' +
+        '<meta content="meta value" key="value">'
       );
     });
 
@@ -170,11 +191,11 @@ describe('Hairdresser', () => {
         .meta({ key: 'value' }, { content: 'meta value' })
         .link({ key: 'value' }, { content: 'link value' });
 
-      expect(document.head.innerHTML).toBe(
+      expect(getSortedHeadString()).toBe(
         // Override method call order
-        '<title>title value</title>' +
-        '<meta key="value" content="meta value">' +
-        '<link key="value" content="link value">'
+        '<link content="link value" key="value">' +
+        '<meta content="meta value" key="value">' +
+        '<title>title value</title>'
       );
 
       hairdresser.override()
@@ -182,10 +203,10 @@ describe('Hairdresser', () => {
         .meta({ key: 'value' }, { content: 'overridden meta value' })
         .link({ key: 'value' }, { content: 'overridden link value' });
 
-      expect(document.head.innerHTML).toBe(
-        '<title>overridden title value</title>' +
-        '<meta key="value" content="overridden meta value">' +
-        '<link key="value" content="overridden link value">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="overridden link value" key="value">' +
+        '<meta content="overridden meta value" key="value">' +
+        '<title>overridden title value</title>'
       );
     });
 
@@ -202,11 +223,11 @@ describe('Hairdresser', () => {
       expect(stopRendering).toEqual(jasmine.any(Function));
 
       stopRendering();
-      expect(document.head.innerHTML).toBe('<title>change me</title>');
+      expect(getSortedHeadString()).toBe('<title>change me</title>');
 
       // Override does not affect DOM after stop
       hairdresser.override().title('I do nothing');
-      expect(document.head.innerHTML).toBe('<title>change me</title>');
+      expect(getSortedHeadString()).toBe('<title>change me</title>');
     });
 
     it('should update elements when override listener receives event', () => {
@@ -227,10 +248,10 @@ describe('Hairdresser', () => {
         .meta({ key: 'value' }, () => ({ content: meta }))
         .link({ key: 'value' }, () => ({ content: link }));
 
-      expect(document.head.innerHTML).toBe(
-        '<title>old title</title>' +
-        '<meta key="value" content="old meta">' +
-        '<link key="value" content="old link">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="old link" key="value">' +
+        '<meta content="old meta" key="value">' +
+        '<title>old title</title>'
       );
 
       title = 'new title';
@@ -238,10 +259,10 @@ describe('Hairdresser', () => {
       link = 'new link';
 
       emitter.emit('override');
-      expect(document.head.innerHTML).toBe(
-        '<title>new title</title>' +
-        '<meta key="value" content="new meta">' +
-        '<link key="value" content="new link">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="new link" key="value">' +
+        '<meta content="new meta" key="value">' +
+        '<title>new title</title>'
       );
     });
 
@@ -269,10 +290,10 @@ describe('Hairdresser', () => {
           removeListener: token => token.remove(),
         });
 
-      expect(document.head.innerHTML).toBe(
-        '<title>old title</title>' +
-        '<meta key="value" content="old meta">' +
-        '<link key="value" content="old link">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="old link" key="value">' +
+        '<meta content="old meta" key="value">' +
+        '<title>old title</title>'
       );
 
       title = 'new title';
@@ -280,24 +301,24 @@ describe('Hairdresser', () => {
       link = 'new link';
 
       emitter.emit('title');
-      expect(document.head.innerHTML).toBe(
-        '<title>new title</title>' +
-        '<meta key="value" content="old meta">' +
-        '<link key="value" content="old link">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="old link" key="value">' +
+        '<meta content="old meta" key="value">' +
+        '<title>new title</title>'
       );
 
       emitter.emit('meta');
-      expect(document.head.innerHTML).toBe(
-        '<title>new title</title>' +
-        '<meta key="value" content="new meta">' +
-        '<link key="value" content="old link">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="old link" key="value">' +
+        '<meta content="new meta" key="value">' +
+        '<title>new title</title>'
       );
 
       emitter.emit('link');
-      expect(document.head.innerHTML).toBe(
-        '<title>new title</title>' +
-        '<meta key="value" content="new meta">' +
-        '<link key="value" content="new link">'
+      expect(getSortedHeadString()).toBe(
+        '<link content="new link" key="value">' +
+        '<meta content="new meta" key="value">' +
+        '<title>new title</title>'
       );
     });
 
@@ -313,23 +334,23 @@ describe('Hairdresser', () => {
           removeListener: token => token.remove(),
         });
 
-      expect(document.head.innerHTML).toBe(
-        '<meta key="value" content="meta">'
+      expect(getSortedHeadString()).toBe(
+        '<meta content="meta" key="value">'
       );
 
       // Reset
-      document.head.innerHTML = '';
+      resetHead();
 
       emitter.emit('meta');
-      expect(document.head.innerHTML).toBe(
-        '<meta key="value" content="meta">'
+      expect(getSortedHeadString()).toBe(
+        '<meta content="meta" key="value">'
       );
 
       // Reset
-      document.head.innerHTML = '';
+      resetHead();
 
       override.restore();
-      expect(document.head.innerHTML).toBe('');
+      expect(getSortedHeadString()).toBe('');
     });
   });
 });

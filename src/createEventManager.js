@@ -1,5 +1,4 @@
 import invariant from 'invariant';
-import objectKeys from 'object-keys';
 
 import {
   removeItem,
@@ -188,7 +187,7 @@ export default function createEventManager(eventHandlers) {
   }
 
   function destroy() {
-    objectKeys(_controllerListeners)
+    Object.keys(_controllerListeners)
       .map(id => _controllerListeners[id])
       .filter(listener => listener.isListening())
       .forEach(listener => {

@@ -1,5 +1,4 @@
 import invariant from 'invariant';
-import objectKeys from 'object-keys';
 
 import {
   canUseDOM,
@@ -7,22 +6,15 @@ import {
   createIdGenerator,
 } from './utils';
 import Attrs from './classes/Attrs';
-import Controller from './classes/Controller';
+import Controller, {CTRL_TYPE} from './classes/Controller';
 import createEventManager from './createEventManager';
 
-function isElementCacheValid(elem, attrs) {
-  if (elem.parentNode !== document.head) {
-    return false;
-  }
-  return attrs.each((name, value) => elem.getAttribute(name) === value);
-}
-
 const validator = {
-  [Controller.CTRL_TYPE.TITLE]: (tagName, value) => {
+  [CTRL_TYPE.TITLE]: (tagName, value) => {
     invariant(typeof value === 'string', 'render value for <title> must be a string');
   },
 
-  [Controller.CTRL_TYPE.ETC]: (tagName, value) => {
+  [CTRL_TYPE.ETC]: (tagName, value) => {
     invariant(typeof value === 'object', `render value for <${tagName}> must be an object`);
   },
 };
@@ -46,13 +38,6 @@ export default class Hairdresser {
    */
   static create() {
     return new Hairdresser();
-  }
-
-  /**
-   * Expose to allow access to Controller static members. (ex. CTRL_TYPE)
-   */
-  static get Controller() {
-    return Controller;
   }
 
   /**
@@ -176,7 +161,7 @@ export default class Hairdresser {
      * @return {Override} Itself.
      */
     Override.prototype.title = function title(render, options) {
-      return this.addController(Controller.CTRL_TYPE.TITLE, 'title', {}, render, options);
+      return this.addController(CTRL_TYPE.TITLE, 'title', {}, render, options);
     };
 
     /**
@@ -196,7 +181,7 @@ export default class Hairdresser {
      * @return {Override} Itself.
      */
     Override.prototype.meta = function meta(attrs, render, options) {
-      return this.addController(Controller.CTRL_TYPE.ETC, 'meta', attrs, render, options);
+      return this.addController(CTRL_TYPE.ETC, 'meta', attrs, render, options);
     };
 
     /**
@@ -216,7 +201,7 @@ export default class Hairdresser {
      * @return {Override} Itself.
      */
     Override.prototype.link = function link(attrs, render, options) {
-      return this.addController(Controller.CTRL_TYPE.ETC, 'link', attrs, render, options);
+      return this.addController(CTRL_TYPE.ETC, 'link', attrs, render, options);
     };
 
     /**
@@ -267,7 +252,7 @@ export default class Hairdresser {
   }
 
   _getActiveControllers() {
-    return objectKeys(this._topControllers).sort()
+    return Object.keys(this._topControllers).sort()
       .map(selector => this._topControllers[selector]);
   }
 
@@ -358,18 +343,18 @@ export default class Hairdresser {
     const result = [];
 
     this._renderOnce({
-      [Controller.CTRL_TYPE.TITLE]: {
+      [CTRL_TYPE.TITLE]: {
         onUpdate: controller => {
           const newTitle = controller.render();
-          validator[Controller.CTRL_TYPE.TITLE](controller.tagName, newTitle);
+          validator[CTRL_TYPE.TITLE](controller.tagName, newTitle);
 
           result.push(`<title>${newTitle}</title>`);
         },
       },
-      [Controller.CTRL_TYPE.ETC]: {
+      [CTRL_TYPE.ETC]: {
         onUpdate: controller => {
           const newAttrs = controller.render();
-          validator[Controller.CTRL_TYPE.ETC](controller.tagName, newAttrs);
+          validator[CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
           // Update attributes
           result.push(
@@ -394,6 +379,15 @@ export default class Hairdresser {
               'Cannot use DOM object. ' +
               'Make sure `window` and `document` are available globally.');
 
+    const head = document.getElementsByTagName('head')[0];
+
+    function isElementCacheValid(elem, attrs) {
+      if (elem.parentNode !== head) {
+        return false;
+      }
+      return attrs.each((name, value) => elem.getAttribute(name) === value);
+    }
+
     const cachedElem = {};
 
     function getElement(controller) {
@@ -416,7 +410,7 @@ export default class Hairdresser {
         return element;
       }
 
-      element = document.head.querySelector(`${controller.selector}`);
+      element = head.querySelector(`${controller.selector}`);
 
       if (element) {
         cachedElem[controller.id] = element;
@@ -427,7 +421,7 @@ export default class Hairdresser {
       controller.attrs.each((name, value) => {
         element.setAttribute(name, value);
       });
-      document.head.appendChild(element);
+      head.appendChild(element);
 
       cachedElem[controller.id] = element;
       return element;
@@ -436,10 +430,10 @@ export default class Hairdresser {
     const oldTitle = document.title;
 
     return this._renderAndListen({
-      [Controller.CTRL_TYPE.TITLE]: {
+      [CTRL_TYPE.TITLE]: {
         onUpdate: controller => {
           const newTitle = controller.render();
-          validator[Controller.CTRL_TYPE.TITLE](controller.tagName, newTitle);
+          validator[CTRL_TYPE.TITLE](controller.tagName, newTitle);
           document.title = newTitle;
         },
 
@@ -449,15 +443,15 @@ export default class Hairdresser {
           }
         },
       },
-      [Controller.CTRL_TYPE.ETC]: {
+      [CTRL_TYPE.ETC]: {
         onUpdate: controller => {
           const element = ensureElement(controller);
 
           // Update attributes
           const newAttrs = controller.render();
-          validator[Controller.CTRL_TYPE.ETC](controller.tagName, newAttrs);
+          validator[CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
-          objectKeys(newAttrs).forEach(attrName => {
+          Object.keys(newAttrs).forEach(attrName => {
             element.setAttribute(attrName, newAttrs[attrName]);
           });
         },
