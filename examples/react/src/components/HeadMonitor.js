@@ -1,11 +1,10 @@
 import React from 'react';
-import Hairdresser from '../../../../src/Hairdresser';
+import {CTRL_TYPE} from '../../../../src/classes/Controller';
 import hljs from 'highlight.js/lib/highlight';
 
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 
 const TAGS = ['TITLE', 'META', 'LINK'];
-const Controller = Hairdresser.Controller;
 
 class HeadMonitor extends React.Component {
   static contextTypes = {
@@ -48,10 +47,11 @@ class HeadMonitor extends React.Component {
     };
 
     this.context.hairdresser._renderAndListen({
-      [Controller.CTRL_TYPE.TITLE]: {
+      [CTRL_TYPE.TITLE]: {
         onUpdate: update,
+        onStop: update,
       },
-      [Controller.CTRL_TYPE.ELEMENT]: {
+      [CTRL_TYPE.ETC]: {
         onUpdate: update,
         onStop: update,
       },

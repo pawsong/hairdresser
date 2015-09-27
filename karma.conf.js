@@ -3,7 +3,9 @@
 var webpackConfig = require('./webpack/test.config.js');
 var isCI = process.env.CONTINUOUS_INTEGRATION === 'true';
 var runCoverage = process.env.COVERAGE === 'true' || isCI;
-var devBrowser = process.env.PHANTOM ? 'PhantomJS' : 'Chrome';
+var isWin = /^win/.test(process.platform);
+var defaultBrowsers = isWin ? ['IE8', 'IE9', 'IE10', 'IE11'] : ['Chrome'];
+var devBrowsers = process.env.PHANTOM ? ['PhantomJS'] : defaultBrowsers;
 
 var preprocessors = ['webpack', 'sourcemap'];
 var reporters = ['mocha'];
@@ -27,7 +29,8 @@ module.exports = function(config) { // eslint-disable-line func-names
     ],
 
     files: [
-      'node_modules/phantomjs-polyfill/bind-polyfill.js',
+      'node_modules/es5-shim/es5-shim.js',
+      'node_modules/es5-shim/es5-sham.js',
       'test/index.js',
     ],
 
@@ -64,12 +67,28 @@ module.exports = function(config) { // eslint-disable-line func-names
 
     autoWatch: true,
 
-    browsers: [ isCI ? 'ChromeTravisCI' : devBrowser ],
+    browsers: isCI ? ['ChromeTravisCI'] : devBrowsers,
 
     customLaunchers: {
       ChromeTravisCI: {
         base: 'Chrome',
         flags: ['--no-sandbox'],
+      },
+      IE8: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE8',
+      },
+      IE9: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE9',
+      },
+      IE10: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE10',
+      },
+      IE11: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE11',
       },
     },
 

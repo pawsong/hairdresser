@@ -3,16 +3,12 @@ import invariant from 'invariant';
 import Attrs from './Attrs';
 import LinkedListNode from './LinkedListNode';
 
+export const CTRL_TYPE = {
+  TITLE: 'title',
+  ETC: 'etc',
+};
+
 export default class Controller extends LinkedListNode {
-  /**
-   * Controller types.
-   */
-  static get CTRL_TYPE() {
-    return {
-      TITLE: 'title',
-      ETC: 'etc',
-    };
-  }
 
   /**
    * Controller constructor.

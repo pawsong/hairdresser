@@ -1,11 +1,10 @@
-import Hairdresser from '../../../../src/Hairdresser';
+import {CTRL_TYPE} from '../../../../src/classes/Controller';
 import hljs from 'highlight.js/lib/highlight';
 
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 require('highlight.js/styles/sunburst.css');
 
 const TAGS = ['TITLE', 'META', 'LINK'];
-const Controller = Hairdresser.Controller;
 
 export function HeadMonitorCtrl($interval, $scope, $sce, $document, hairdresser) {
   const head = $document[0].head;
@@ -27,11 +26,11 @@ export function HeadMonitorCtrl($interval, $scope, $sce, $document, hairdresser)
   };
 
   hairdresser._renderAndListen({
-    [Controller.CTRL_TYPE.TITLE]: {
+    [CTRL_TYPE.TITLE]: {
       onUpdate: update,
       onStop: update,
     },
-    [Controller.CTRL_TYPE.ELEMENT]: {
+    [CTRL_TYPE.ETC]: {
       onUpdate: update,
       onStop: update,
     },
