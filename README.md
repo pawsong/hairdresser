@@ -3,7 +3,8 @@
   A universal js library for managing head DOM elements (title, link and meta)
 
   [![NPM Version][npm-image]][npm-url]
-  [![Build Status][travis-image]][travis-url]
+  [![Linux Build][travis-image]][travis-url]
+  [![Windows Build][appveyor-image]][appveyor-url]
   [![Coverage Status][coveralls-image]][coveralls-url]
   [![Dependency Status][dependency-image]][dependency-url]
   [![devDependency Status][devDependency-image]][devDependency-url]
@@ -209,8 +210,12 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/hairdresser.svg
 [npm-url]: https://npmjs.org/package/hairdresser
-[travis-image]: https://travis-ci.org/pawsong/hairdresser.svg
+
+[travis-image]: https://img.shields.io/travis/pawsong/hairdresser/master.svg?label=linux
 [travis-url]: https://travis-ci.org/pawsong/hairdresser
+[appveyor-image]: https://img.shields.io/appveyor/ci/pawsong/hairdresser/master.svg?label=windows
+[appveyor-url]: https://ci.appveyor.com/project/pawsong/hairdresser
+
 [coveralls-image]: https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&service=github
 [coveralls-url]: https://coveralls.io/github/pawsong/hairdresser?branch=master
 
