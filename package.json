@@ -53,7 +53,7 @@
     "eslint-plugin-react": "^3.3.2",
     "fbemitter": "^2.0.0",
     "gh-pages": "^0.4.0",
-    "isparta-loader": "^0.2.0",
+    "isparta-loader": "^1.0.0",
     "jsdoc": "git+https://github.com/jsdoc3/jsdoc.git",
     "karma": "^0.13.9",
     "karma-chrome-launcher": "^0.2.0",
