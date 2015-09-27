@@ -1,3 +1,5 @@
+import objectKeys from 'object-keys';
+
 export default class Attrs {
   static _toHtml(keys, obj) {
     return keys
@@ -6,7 +8,7 @@ export default class Attrs {
   }
 
   static toHtml(obj) {
-    return Attrs._toHtml(Object.keys(obj).sort(), obj);
+    return Attrs._toHtml(objectKeys(obj).sort(), obj);
   }
 
   static _toSelector(keys, obj) {
@@ -16,13 +18,13 @@ export default class Attrs {
   }
 
   static toSelector(obj) {
-    return Attrs._toSelector(Object.keys(obj).sort(), obj);
+    return Attrs._toSelector(objectKeys(obj).sort(), obj);
   }
 
   constructor(obj) {
     this._data = obj;
 
-    this._attrNames = Object.keys(this._data).sort();
+    this._attrNames = objectKeys(this._data).sort();
     this._attrNamesLen = this._attrNames.length;
 
     this.html = Attrs._toHtml(this._attrNames, this._data);

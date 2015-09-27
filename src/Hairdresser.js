@@ -1,4 +1,5 @@
 import invariant from 'invariant';
+import objectKeys from 'object-keys';
 
 import {
   canUseDOM,
@@ -266,7 +267,7 @@ export default class Hairdresser {
   }
 
   _getActiveControllers() {
-    return Object.keys(this._topControllers).sort()
+    return objectKeys(this._topControllers).sort()
       .map(selector => this._topControllers[selector]);
   }
 
@@ -456,7 +457,7 @@ export default class Hairdresser {
           const newAttrs = controller.render();
           validator[Controller.CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
-          Object.keys(newAttrs).forEach(attrName => {
+          objectKeys(newAttrs).forEach(attrName => {
             element.setAttribute(attrName, newAttrs[attrName]);
           });
         },
