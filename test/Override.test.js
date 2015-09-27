@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {expect} from 'chai';
 
 import {EventEmitter} from 'fbemitter';

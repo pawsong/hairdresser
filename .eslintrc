@@ -6,7 +6,8 @@
     "mocha": true
   },
   "rules": {
-    "valid-jsdoc": 2
+    "valid-jsdoc": 2,
+    "id-length": 0
   },
   "extends": [
     "airbnb/base"

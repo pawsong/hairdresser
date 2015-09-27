@@ -50,7 +50,7 @@ server.app.get('*', async (req, res, next) => {
     });
 
     res.send(result);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 });
