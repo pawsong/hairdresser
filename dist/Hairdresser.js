@@ -70,17 +70,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _utils = __webpack_require__(3);
+	var _objectKeys = __webpack_require__(2);
 
-	var _classesAttrs = __webpack_require__(2);
+	var _objectKeys2 = _interopRequireDefault(_objectKeys);
+
+	var _utils = __webpack_require__(4);
+
+	var _classesAttrs = __webpack_require__(3);
 
 	var _classesAttrs2 = _interopRequireDefault(_classesAttrs);
 
-	var _classesController = __webpack_require__(4);
+	var _classesController = __webpack_require__(5);
 
 	var _classesController2 = _interopRequireDefault(_classesController);
 
-	var _createEventManager2 = __webpack_require__(6);
+	var _createEventManager2 = __webpack_require__(7);
 
 	var _createEventManager3 = _interopRequireDefault(_createEventManager2);
 
@@ -354,7 +358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  Hairdresser.prototype._getActiveControllers = function _getActiveControllers() {
 	    var _this3 = this;
 
-	    return Object.keys(this._topControllers).sort().map(function (selector) {
+	    return _objectKeys2['default'](this._topControllers).sort().map(function (selector) {
 	      return _this3._topControllers[selector];
 	    });
 	  };
@@ -547,7 +551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var newAttrs = controller.render();
 	        validator[_classesController2['default'].CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
-	        Object.keys(newAttrs).forEach(function (attrName) {
+	        _objectKeys2['default'](newAttrs).forEach(function (attrName) {
 	          element.setAttribute(attrName, newAttrs[attrName]);
 	        });
 	      },
@@ -630,13 +634,147 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// modified from https://github.com/es-shims/es5-shim
+	var has = Object.prototype.hasOwnProperty;
+	var toStr = Object.prototype.toString;
+	var slice = Array.prototype.slice;
+	var isArgs = __webpack_require__(8);
+	var hasDontEnumBug = !({ 'toString': null }).propertyIsEnumerable('toString');
+	var hasProtoEnumBug = function () {}.propertyIsEnumerable('prototype');
+	var dontEnums = [
+		'toString',
+		'toLocaleString',
+		'valueOf',
+		'hasOwnProperty',
+		'isPrototypeOf',
+		'propertyIsEnumerable',
+		'constructor'
+	];
+	var equalsConstructorPrototype = function (o) {
+		var ctor = o.constructor;
+		return ctor && ctor.prototype === o;
+	};
+	var blacklistedKeys = {
+		$window: true,
+		$console: true,
+		$parent: true,
+		$self: true,
+		$frames: true,
+		$webkitIndexedDB: true,
+		$webkitStorageInfo: true
+	};
+	var hasAutomationEqualityBug = (function () {
+		/* global window */
+		if (typeof window === 'undefined') { return false; }
+		for (var k in window) {
+			if (!blacklistedKeys['$' + k] && has.call(window, k) && window[k] !== null && typeof window[k] === 'object') {
+				try {
+					equalsConstructorPrototype(window[k]);
+				} catch (e) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}());
+	var equalsConstructorPrototypeIfNotBuggy = function (o) {
+		/* global window */
+		if (typeof window === 'undefined' && !hasAutomationEqualityBug) {
+			return equalsConstructorPrototype(o);
+		}
+		try {
+			return equalsConstructorPrototype(o);
+		} catch (e) {
+			return false;
+		}
+	};
+
+	var keysShim = function keys(object) {
+		var isObject = object !== null && typeof object === 'object';
+		var isFunction = toStr.call(object) === '[object Function]';
+		var isArguments = isArgs(object);
+		var isString = isObject && toStr.call(object) === '[object String]';
+		var theKeys = [];
+
+		if (!isObject && !isFunction && !isArguments) {
+			throw new TypeError('Object.keys called on a non-object');
+		}
+
+		var skipProto = hasProtoEnumBug && isFunction;
+		if (isString && object.length > 0 && !has.call(object, 0)) {
+			for (var i = 0; i < object.length; ++i) {
+				theKeys.push(String(i));
+			}
+		}
+
+		if (isArguments && object.length > 0) {
+			for (var j = 0; j < object.length; ++j) {
+				theKeys.push(String(j));
+			}
+		} else {
+			for (var name in object) {
+				if (!(skipProto && name === 'prototype') && has.call(object, name)) {
+					theKeys.push(String(name));
+				}
+			}
+		}
+
+		if (hasDontEnumBug) {
+			var skipConstructor = equalsConstructorPrototypeIfNotBuggy(object);
+
+			for (var k = 0; k < dontEnums.length; ++k) {
+				if (!(skipConstructor && dontEnums[k] === 'constructor') && has.call(object, dontEnums[k])) {
+					theKeys.push(dontEnums[k]);
+				}
+			}
+		}
+		return theKeys;
+	};
+
+	keysShim.shim = function shimObjectKeys() {
+		if (!Object.keys) {
+			Object.keys = keysShim;
+		} else {
+			var keysWorksWithArguments = (function () {
+				// Safari 5.0 bug
+				return (Object.keys(arguments) || '').length === 2;
+			}(1, 2));
+			if (!keysWorksWithArguments) {
+				var originalKeys = Object.keys;
+				Object.keys = function keys(object) {
+					if (isArgs(object)) {
+						return originalKeys(slice.call(object));
+					} else {
+						return originalKeys(object);
+					}
+				};
+			}
+		}
+		return Object.keys || keysShim;
+	};
+
+	module.exports = keysShim;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _objectKeys = __webpack_require__(2);
+
+	var _objectKeys2 = _interopRequireDefault(_objectKeys);
 
 	var Attrs = (function () {
 	  Attrs._toHtml = function _toHtml(keys, obj) {
@@ -646,7 +784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  Attrs.toHtml = function toHtml(obj) {
-	    return Attrs._toHtml(Object.keys(obj).sort(), obj);
+	    return Attrs._toHtml(_objectKeys2['default'](obj).sort(), obj);
 	  };
 
 	  Attrs._toSelector = function _toSelector(keys, obj) {
@@ -656,7 +794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  Attrs.toSelector = function toSelector(obj) {
-	    return Attrs._toSelector(Object.keys(obj).sort(), obj);
+	    return Attrs._toSelector(_objectKeys2['default'](obj).sort(), obj);
 	  };
 
 	  function Attrs(obj) {
@@ -664,7 +802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this._data = obj;
 
-	    this._attrNames = Object.keys(this._data).sort();
+	    this._attrNames = _objectKeys2['default'](this._data).sort();
 	    this._attrNamesLen = this._attrNames.length;
 
 	    this.html = Attrs._toHtml(this._attrNames, this._data);
@@ -688,7 +826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -720,7 +858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -739,11 +877,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _Attrs = __webpack_require__(2);
+	var _Attrs = __webpack_require__(3);
 
 	var _Attrs2 = _interopRequireDefault(_Attrs);
 
-	var _LinkedListNode2 = __webpack_require__(5);
+	var _LinkedListNode2 = __webpack_require__(6);
 
 	var _LinkedListNode3 = _interopRequireDefault(_LinkedListNode2);
 
@@ -819,7 +957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -861,7 +999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -877,7 +1015,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _invariant2 = _interopRequireDefault(_invariant);
 
-	var _utils = __webpack_require__(3);
+	var _objectKeys = __webpack_require__(2);
+
+	var _objectKeys2 = _interopRequireDefault(_objectKeys);
+
+	var _utils = __webpack_require__(4);
 
 	var OverrideListener = (function () {
 	  function OverrideListener(override) {
@@ -1073,7 +1215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  function destroy() {
-	    Object.keys(_controllerListeners).map(function (id) {
+	    _objectKeys2['default'](_controllerListeners).map(function (id) {
 	      return _controllerListeners[id];
 	    }).filter(function (listener) {
 	      return listener.isListening();
@@ -1094,6 +1236,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = exports['default'];
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var toStr = Object.prototype.toString;
+
+	module.exports = function isArguments(value) {
+		var str = toStr.call(value);
+		var isArgs = str === '[object Arguments]';
+		if (!isArgs) {
+			isArgs = str !== '[object Array]' &&
+				value !== null &&
+				typeof value === 'object' &&
+				typeof value.length === 'number' &&
+				value.length >= 0 &&
+				toStr.call(value.callee) === '[object Function]';
+		}
+		return isArgs;
+	};
+
 
 /***/ }
 /******/ ])
