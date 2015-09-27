@@ -135,7 +135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Hairdresser constructor.
 	     *
 	     * @constructs Hairdresser
-	     * @returns {Hairdresser} a new Hairdresser instance.
+	     * @return {Hairdresser} a new Hairdresser instance.
 	     */
 	  }]);
 
@@ -182,7 +182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *
 	     * @class Override
 	     * @param {object} options Override options.
-	     * @returns {Override} a new Override instance.
+	     * @return {Override} a new Override instance.
 	     */
 	    function Override(options) {
 	      _invariant2['default'](!options.addListener || options.removeListener, 'addListener requires removeListener');
@@ -247,7 +247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Add controller for `<title>` element.
 	     *
 	     * @memberof Override
-	     * @param {*} render A string which replaces <title> value or a function
+	     * @param {*} render A string which replaces `<title>` value or a function
 	     * that returns the title replacing string value.
 	     * @param {object} options Options for element controller.
 	     * @param {addListener} options.addListener A function that adds controller
@@ -786,7 +786,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * listener to event emitter.
 	     * @param {removeListener} options.removeListener A function that removes
 	     * controller listener.
-	     * @returns {Controller} a new Controller instance.
+	     * @return {Controller} a new Controller instance.
 	     */
 	  }]);
 
