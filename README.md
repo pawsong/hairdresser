@@ -9,6 +9,8 @@
   
   [![Dependency Status][dependency-image]][dependency-url]
   [![devDependency Status][devDependency-image]][devDependency-url]
+  
+  [![Sauce Test Status][saucelabs-image]][saucelabs-url]
 
 ```javascript
 var hairdresser = Hairdresser.create();
@@ -224,3 +226,7 @@ MIT
 [dependency-url]: https://david-dm.org/pawsong/hairdresser
 [devDependency-image]: https://david-dm.org/pawsong/hairdresser/dev-status.svg
 [devDependency-url]: https://david-dm.org/pawsong/hairdresser#info=devDependencies
+
+
+[saucelabs-image]: https://saucelabs.com/browser-matrix/hairdresser.svg
+[saucelabs-url]: https://saucelabs.com/u/hairdresser
