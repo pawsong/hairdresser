@@ -3,8 +3,8 @@ var browsers;
 var reporters;
 var webpackConfig;
 
-// Sauce Labs report
 if (process.env.TEST_SAUCELABS === 'true') {
+  // Sauce Labs report
   browsers = [
     'slIE8',
     'slIE9',
@@ -18,24 +18,18 @@ if (process.env.TEST_SAUCELABS === 'true') {
   ];
   reporters = ['mocha', 'saucelabs'];
   webpackConfig = require('./webpack/test.config');
-}
-
-// Coveralls report
-else if (process.env.TEST_COVERALLS === 'true') {
+} else if (process.env.TEST_COVERALLS === 'true') {
+  // Coveralls report
   browsers = ['ChromeTravisCI'];
   reporters = ['mocha', 'coverage', 'coveralls'];
   webpackConfig = require('./webpack/test-coverage.config');
-}
-
-// Local coverage report
-else if (process.env.TEST_COVERAGE === 'true') {
+} else if (process.env.TEST_COVERAGE === 'true') {
+  // Local coverage report
   browsers = ['PhantomJS'];
   reporters = ['mocha', 'coverage'];
   webpackConfig = require('./webpack/test-coverage.config');
-}
-
-// Local test
-else {
+} else {
+  // Local test
   browsers = ['PhantomJS'];
   reporters = ['mocha'];
   webpackConfig = require('./webpack/test.config');
@@ -68,7 +62,7 @@ module.exports = function(config) { // eslint-disable-line func-names
     autoWatch: true,
 
     sauceLabs: {
-      testName: 'Hairdresser Unit Tests'
+      testName: 'Hairdresser Unit Tests',
     },
 
     customLaunchers: {
@@ -96,55 +90,55 @@ module.exports = function(config) { // eslint-disable-line func-names
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 7',
-        version: '8'
+        version: '8',
       },
       slIE9: {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 7',
-        version: '9'
+        version: '9',
       },
       slIE10: {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 8',
-        version: '10'
+        version: '10',
       },
       slIE11: {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 8.1',
-        version: '11'
+        version: '11',
       },
       slChrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'Windows 7',
-        version: '37'
+        version: '37',
       },
       slFireFox: {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'Windows 7',
-        version: '32'
+        version: '32',
       },
       slIphone: {
         base: 'SauceLabs',
         browserName: 'iphone',
         platform: 'OS X 10.9',
-        version: '7.1'
+        version: '7.1',
       },
       slAndroid: {
         base: 'SauceLabs',
         browserName: 'android',
         platform: 'Linux',
-        version: '4.4'
+        version: '4.4',
       },
       slSafari: {
         base: 'SauceLabs',
         browserName: 'safari',
         platform: 'OS X 10.9',
-        version: '7'
+        version: '7',
       },
     },
 
