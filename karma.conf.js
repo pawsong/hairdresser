@@ -1,22 +1,44 @@
 /* eslint no-var: 0, vars-on-top: 0 */
+var browsers;
+var reporters;
+var webpackConfig;
 
-var webpackConfig = require('./webpack/test.config.js');
-var isCI = process.env.CONTINUOUS_INTEGRATION === 'true';
-var runCoverage = process.env.COVERAGE === 'true' || isCI;
-var isWin = /^win/.test(process.platform);
-var defaultBrowsers = isWin ? ['IE8', 'IE9', 'IE10', 'IE11'] : ['Chrome'];
-var devBrowsers = process.env.PHANTOM ? ['PhantomJS'] : defaultBrowsers;
+// Sauce Labs report
+if (process.env.TEST_SAUCELABS === 'true') {
+  browsers = [
+    'slIE8',
+    'slIE9',
+    'slIE10',
+    'slIE11',
+    'slChrome',
+    'slFireFox',
+    'slIphone',
+    'slAndroid',
+    'slSafari',
+  ];
+  reporters = ['mocha', 'saucelabs'];
+  webpackConfig = require('./webpack/test.config');
+}
 
-var preprocessors = ['webpack', 'sourcemap'];
-var reporters = ['mocha'];
-
-if (runCoverage) {
+// Coveralls report
+else if (process.env.TEST_COVERALLS === 'true') {
+  browsers = ['ChromeTravisCI'];
+  reporters = ['mocha', 'coverage', 'coveralls'];
   webpackConfig = require('./webpack/test-coverage.config');
-  reporters.push('coverage');
+}
 
-  if (isCI) {
-    reporters.push('coveralls');
-  }
+// Local coverage report
+else if (process.env.TEST_COVERAGE === 'true') {
+  browsers = ['PhantomJS'];
+  reporters = ['mocha', 'coverage'];
+  webpackConfig = require('./webpack/test-coverage.config');
+}
+
+// Local test
+else {
+  browsers = ['PhantomJS'];
+  reporters = ['mocha'];
+  webpackConfig = require('./webpack/test.config');
 }
 
 module.exports = function(config) { // eslint-disable-line func-names
@@ -34,28 +56,7 @@ module.exports = function(config) { // eslint-disable-line func-names
     ],
 
     preprocessors: {
-      'test/index.js': preprocessors,
-    },
-
-    webpack: webpackConfig,
-
-    webpackMiddleware: {
-      noInfo: isCI,
-    },
-
-    reporters: reporters,
-
-    mochaReporter: {
-      output: 'autowatch',
-    },
-
-    coverageReporter: {
-      dir: '.coverage',
-      reporters: [
-        { type: 'html' },
-        { type: 'lcovonly' },
-        { type: 'text' },
-      ],
+      'test/index.js': ['webpack', 'sourcemap'],
     },
 
     port: 9876,
@@ -66,7 +67,9 @@ module.exports = function(config) { // eslint-disable-line func-names
 
     autoWatch: true,
 
-    browsers: isCI ? ['ChromeTravisCI'] : devBrowsers,
+    sauceLabs: {
+      testName: 'Hairdresser Unit Tests'
+    },
 
     customLaunchers: {
       ChromeTravisCI: {
@@ -89,11 +92,87 @@ module.exports = function(config) { // eslint-disable-line func-names
         base: 'IE',
         'x-ua-compatible': 'IE=EmulateIE11',
       },
+      slIE8: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 7',
+        version: '8'
+      },
+      slIE9: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 7',
+        version: '9'
+      },
+      slIE10: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 8',
+        version: '10'
+      },
+      slIE11: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 8.1',
+        version: '11'
+      },
+      slChrome: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'Windows 7',
+        version: '37'
+      },
+      slFireFox: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'Windows 7',
+        version: '32'
+      },
+      slIphone: {
+        base: 'SauceLabs',
+        browserName: 'iphone',
+        platform: 'OS X 10.9',
+        version: '7.1'
+      },
+      slAndroid: {
+        base: 'SauceLabs',
+        browserName: 'android',
+        platform: 'Linux',
+        version: '4.4'
+      },
+      slSafari: {
+        base: 'SauceLabs',
+        browserName: 'safari',
+        platform: 'OS X 10.9',
+        version: '7'
+      },
     },
 
     captureTimeout: 60000,
+
     browserNoActivityTimeout: 45000,
 
-    singleRun: isCI,
+    mochaReporter: {
+      output: 'autowatch',
+    },
+
+    coverageReporter: {
+      dir: '.coverage',
+      reporters: [
+        { type: 'html' },
+        { type: 'lcovonly' },
+        { type: 'text' },
+      ],
+    },
+
+    webpackMiddleware: {
+      noInfo: true,
+    },
+
+    webpack: webpackConfig,
+
+    reporters: reporters,
+
+    browsers: browsers,
   });
 };
