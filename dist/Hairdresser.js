@@ -78,7 +78,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _classesController2 = _interopRequireDefault(_classesController);
 
-	var _createEventManager2 = __webpack_require__(6);
+	var _createEventManager2 = __webpack_require__(5);
 
 	var _createEventManager3 = _interopRequireDefault(_createEventManager2);
 
@@ -90,12 +90,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * @callback addListener
-	 * @param {function} callback A function to be bound to event emitter.
+	 * @param {function} listener A function to be bound to event emitter.
 	 * @return {*} A value to pass to {@link removeListener}.
 	 */
 
 	/**
 	 * @callback removeListener
+	 * @param {function} listener A function to be removed from event emitter.
 	 * @param {*} addListenerReturnValue Return value of addListener
 	 */
 
@@ -720,8 +721,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	var _invariant = __webpack_require__(1);
 
 	var _invariant2 = _interopRequireDefault(_invariant);
@@ -730,19 +729,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Attrs2 = _interopRequireDefault(_Attrs);
 
-	var _LinkedListNode2 = __webpack_require__(5);
-
-	var _LinkedListNode3 = _interopRequireDefault(_LinkedListNode2);
-
 	var CTRL_TYPE = {
 	  TITLE: 'title',
 	  ETC: 'etc'
 	};
 
 	exports.CTRL_TYPE = CTRL_TYPE;
+	function link(prev, next) {
+	  if (prev) {
+	    prev.next = next;
+	  }
 
-	var Controller = (function (_LinkedListNode) {
-	  _inherits(Controller, _LinkedListNode);
+	  if (next) {
+	    next.prev = prev;
+	  }
+	}
+
+	var Controller = (function () {
 
 	  /**
 	   * Controller constructor.
@@ -775,8 +778,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _classCallCheck(this, Controller);
 
-	    _LinkedListNode.call(this);
-
 	    _invariant2['default'](typeof render === 'function', 'render function is required');
 	    _invariant2['default'](!options.addListener || options.removeListener, 'addListener requires removeListener');
 
@@ -792,55 +793,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.removeListener = options.removeListener;
 	  }
 
-	  return Controller;
-	})(_LinkedListNode3['default']);
-
-	exports['default'] = Controller;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	exports.__esModule = true;
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function link(prev, next) {
-	  if (prev) {
-	    prev.next = next;
-	  }
-
-	  if (next) {
-	    next.prev = prev;
-	  }
-	}
-
-	var LinkedListNode = (function () {
-	  function LinkedListNode() {
-	    _classCallCheck(this, LinkedListNode);
-	  }
-
-	  LinkedListNode.prototype.insertAfter = function insertAfter(node) {
+	  Controller.prototype.insertAfter = function insertAfter(node) {
 	    link(node, this.next);
 	    link(this, node);
 	  };
 
-	  LinkedListNode.prototype.unlink = function unlink() {
+	  Controller.prototype.unlink = function unlink() {
 	    link(this.prev, this.next);
 	    this.prev = undefined;
 	    this.next = undefined;
 	  };
 
-	  return LinkedListNode;
+	  return Controller;
 	})();
 
-	exports["default"] = LinkedListNode;
-	module.exports = exports["default"];
+	exports['default'] = Controller;
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -881,9 +851,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (this._override.addListener && !this.listening) {
 	      this.listening = true;
-	      this._addListenerRet = this._override.addListener(function () {
+	      this._listener = function () {
 	        _this.onUpdate();
-	      });
+	      };
+	      this._addListenerRet = this._override.addListener(this._listener);
 	    }
 	  };
 
@@ -891,7 +862,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _utils.removeItem(this._controllerListeners, controllerListener);
 
 	    if (this.listening && this._controllerListeners.length === 0) {
-	      this._override.removeListener(this._addListenerRet);
+	      this._override.removeListener(this._listener, this._addListenerRet);
 	      this.listening = false;
 	    }
 	  };
@@ -935,9 +906,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this._overrideListener.addControllerListener(this);
 	    if (this._controller.addListener) {
-	      this._addListenerRet = this._controller.addListener(function () {
+	      this._listener = function () {
 	        _this2.onUpdate();
-	      });
+	      };
+	      this._addListenerRet = this._controller.addListener(this._listener);
 	    }
 	    this._listening = true;
 	    return this;
@@ -946,7 +918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  ControllerListener.prototype.stopListening = function stopListening() {
 	    this._overrideListener.removeControllerListener(this);
 	    if (this._controller.removeListener) {
-	      this._controller.removeListener(this._addListenerRet);
+	      this._controller.removeListener(this._listener, this._addListenerRet);
 	    }
 	    this._listening = false;
 	    return this;
