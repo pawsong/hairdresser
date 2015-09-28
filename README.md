@@ -116,11 +116,11 @@ var override = hairdresser.override()
 
 // Cancel override on leaving the article page.
 onLeaveState(function () {
-  override.cancel();
+  override.restore();
 });
 ```
 
-Now `<title>` is set to article's title, `My awesome article`. You can go back to the previous controller by calling `cancel` method.
+Now `<title>` is set to article's title, `My awesome article`. You can go back to the previous controller by calling `restore` method.
 
 In case of hierarchical state, you can override a controller multiple times when you traverse down multiple child states.
 
