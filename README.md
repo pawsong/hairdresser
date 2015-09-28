@@ -1,14 +1,13 @@
 # Hairdresser
 
   A universal js library for managing head DOM elements (title, link and meta)
+  
+  Browser support includes every sane browser and IE8+. (IE8 with [es5-shim](https://github.com/es-shims/es5-shim))
 
   [![NPM Version][npm-image]][npm-url]
   [![Linux Build][travis-image]][travis-url]
   [![Windows Build][appveyor-image]][appveyor-url]
   [![Coverage Status][coveralls-image]][coveralls-url]
-
-  [![Dependency Status][dependency-image]][dependency-url]
-  [![devDependency Status][devDependency-image]][devDependency-url]
 
   [![Sauce Test Status][saucelabs-image]][saucelabs-url]
 
@@ -25,6 +24,14 @@ hairdresser.render();
 * Manages `<head>`'s child elements (ex. `<title>`, `<meta>` and `<link>`)
 * Hierarchical state friendly API
 * Server-side rendering
+
+# Browser Support
+- Chrome
+- Firefox
+- Safari
+- Opera
+- Recent mobile browsers
+- IE 8+ (IE 8 with es5-shim)
 
 # Motivation
 ## Independence from framework
@@ -223,12 +230,6 @@ MIT
 
 [coveralls-image]: https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&service=github
 [coveralls-url]: https://coveralls.io/github/pawsong/hairdresser?branch=master
-
-[dependency-image]: https://david-dm.org/pawsong/hairdresser.svg
-[dependency-url]: https://david-dm.org/pawsong/hairdresser
-[devDependency-image]: https://david-dm.org/pawsong/hairdresser/dev-status.svg
-[devDependency-url]: https://david-dm.org/pawsong/hairdresser#info=devDependencies
-
 
 [saucelabs-image]: https://saucelabs.com/browser-matrix/hairdresser.svg
 [saucelabs-url]: https://saucelabs.com/u/hairdresser
