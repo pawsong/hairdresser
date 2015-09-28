@@ -92,9 +92,20 @@ describe('Hairdresser', () => {
 
     const head = document.getElementsByTagName('head')[0];
 
+    const oldHeadChildren = [];
+    for (let i = 0; i < head.children.length; ++i) {
+      oldHeadChildren.push(head.children[i]);
+    }
+
     function resetHead() {
-      while (head.firstChild) {
-        head.removeChild(head.firstChild);
+      document.title = '';
+
+      const elements = head.children;
+      for (let i = 0; i < elements.length; ++i) {
+        const element = elements[i];
+        if (oldHeadChildren.indexOf(element) === -1) {
+          element.parentNode.removeChild(element);
+        }
       }
     }
 
@@ -106,6 +117,10 @@ describe('Hairdresser', () => {
       return children.map(child => {
         if (child.tagName === 'TITLE') {
           return `<title>${document.title}</title>`;
+        }
+
+        if (oldHeadChildren.indexOf(child) >= 0) {
+          return '';
         }
 
         const attribs = [];
@@ -178,7 +193,8 @@ describe('Hairdresser', () => {
       // Alphabetical order
       expect(getSortedHeadString()).toBe(
         '<link content="link value" key="value">' +
-        '<meta content="meta value" key="value">'
+        '<meta content="meta value" key="value">' +
+        '<title></title>'
       );
     });
 
@@ -335,7 +351,8 @@ describe('Hairdresser', () => {
         });
 
       expect(getSortedHeadString()).toBe(
-        '<meta content="meta" key="value">'
+        '<meta content="meta" key="value">' +
+        '<title></title>'
       );
 
       // Reset
@@ -343,14 +360,17 @@ describe('Hairdresser', () => {
 
       emitter.emit('meta');
       expect(getSortedHeadString()).toBe(
-        '<meta content="meta" key="value">'
+        '<meta content="meta" key="value">' +
+        '<title></title>'
       );
 
       // Reset
       resetHead();
 
       override.restore();
-      expect(getSortedHeadString()).toBe('');
+      expect(getSortedHeadString()).toBe(
+        '<title></title>'
+      );
     });
   });
 });
