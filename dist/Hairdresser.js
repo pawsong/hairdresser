@@ -58,8 +58,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 	var _validator;
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -84,18 +82,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createEventManager3 = _interopRequireDefault(_createEventManager2);
 
-	function isElementCacheValid(elem, attrs) {
-	  if (elem.parentNode !== document.head) {
-	    return false;
-	  }
-	  return attrs.each(function (name, value) {
-	    return elem.getAttribute(name) === value;
-	  });
-	}
-
-	var validator = (_validator = {}, _validator[_classesController2['default'].CTRL_TYPE.TITLE] = function (tagName, value) {
+	var validator = (_validator = {}, _validator[_classesController.CTRL_TYPE.TITLE] = function (tagName, value) {
 	  _invariant2['default'](typeof value === 'string', 'render value for <title> must be a string');
-	}, _validator[_classesController2['default'].CTRL_TYPE.ETC] = function (tagName, value) {
+	}, _validator[_classesController.CTRL_TYPE.ETC] = function (tagName, value) {
 	  _invariant2['default'](typeof value === 'object', 'render value for <' + tagName + '> must be an object');
 	}, _validator);
 
@@ -122,22 +111,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  /**
-	   * Expose to allow access to Controller static members. (ex. CTRL_TYPE)
+	   * Hairdresser constructor.
+	   *
+	   * @constructs Hairdresser
+	   * @return {Hairdresser} a new Hairdresser instance.
 	   */
-
-	  _createClass(Hairdresser, null, [{
-	    key: 'Controller',
-	    get: function get() {
-	      return _classesController2['default'];
-	    }
-
-	    /**
-	     * Hairdresser constructor.
-	     *
-	     * @constructs Hairdresser
-	     * @return {Hairdresser} a new Hairdresser instance.
-	     */
-	  }]);
 
 	  function Hairdresser() {
 	    _classCallCheck(this, Hairdresser);
@@ -257,7 +235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {Override} Itself.
 	     */
 	    Override.prototype.title = function title(render, options) {
-	      return this.addController(_classesController2['default'].CTRL_TYPE.TITLE, 'title', {}, render, options);
+	      return this.addController(_classesController.CTRL_TYPE.TITLE, 'title', {}, render, options);
 	    };
 
 	    /**
@@ -277,7 +255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {Override} Itself.
 	     */
 	    Override.prototype.meta = function meta(attrs, render, options) {
-	      return this.addController(_classesController2['default'].CTRL_TYPE.ETC, 'meta', attrs, render, options);
+	      return this.addController(_classesController.CTRL_TYPE.ETC, 'meta', attrs, render, options);
 	    };
 
 	    /**
@@ -297,7 +275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {Override} Itself.
 	     */
 	    Override.prototype.link = function link(attrs, render, options) {
-	      return this.addController(_classesController2['default'].CTRL_TYPE.ETC, 'link', attrs, render, options);
+	      return this.addController(_classesController.CTRL_TYPE.ETC, 'link', attrs, render, options);
 	    };
 
 	    /**
@@ -453,17 +431,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var result = [];
 
-	    this._renderOnce((_renderOnce2 = {}, _renderOnce2[_classesController2['default'].CTRL_TYPE.TITLE] = {
+	    this._renderOnce((_renderOnce2 = {}, _renderOnce2[_classesController.CTRL_TYPE.TITLE] = {
 	      onUpdate: function onUpdate(controller) {
 	        var newTitle = controller.render();
-	        validator[_classesController2['default'].CTRL_TYPE.TITLE](controller.tagName, newTitle);
+	        validator[_classesController.CTRL_TYPE.TITLE](controller.tagName, newTitle);
 
 	        result.push('<title>' + newTitle + '</title>');
 	      }
-	    }, _renderOnce2[_classesController2['default'].CTRL_TYPE.ETC] = {
+	    }, _renderOnce2[_classesController.CTRL_TYPE.ETC] = {
 	      onUpdate: function onUpdate(controller) {
 	        var newAttrs = controller.render();
-	        validator[_classesController2['default'].CTRL_TYPE.ETC](controller.tagName, newAttrs);
+	        validator[_classesController.CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
 	        // Update attributes
 	        result.push('<' + controller.tagName + ' ' + controller.attrs.html + ' ' + _classesAttrs2['default'].toHtml(newAttrs) + '>');
@@ -485,6 +463,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _renderAndListen2;
 
 	    _invariant2['default'](_utils.canUseDOM(), 'Cannot use DOM object. ' + 'Make sure `window` and `document` are available globally.');
+
+	    var head = document.getElementsByTagName('head')[0];
+
+	    function isElementCacheValid(elem, attrs) {
+	      if (elem.parentNode !== head) {
+	        return false;
+	      }
+	      return attrs.each(function (name, value) {
+	        return elem.getAttribute(name) === value;
+	      });
+	    }
 
 	    var cachedElem = {};
 
@@ -508,7 +497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return element;
 	      }
 
-	      element = document.head.querySelector('' + controller.selector);
+	      element = head.querySelector('' + controller.selector);
 
 	      if (element) {
 	        cachedElem[controller.id] = element;
@@ -519,7 +508,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      controller.attrs.each(function (name, value) {
 	        element.setAttribute(name, value);
 	      });
-	      document.head.appendChild(element);
+	      head.appendChild(element);
 
 	      cachedElem[controller.id] = element;
 	      return element;
@@ -527,10 +516,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var oldTitle = document.title;
 
-	    return this._renderAndListen((_renderAndListen2 = {}, _renderAndListen2[_classesController2['default'].CTRL_TYPE.TITLE] = {
+	    return this._renderAndListen((_renderAndListen2 = {}, _renderAndListen2[_classesController.CTRL_TYPE.TITLE] = {
 	      onUpdate: function onUpdate(controller) {
 	        var newTitle = controller.render();
-	        validator[_classesController2['default'].CTRL_TYPE.TITLE](controller.tagName, newTitle);
+	        validator[_classesController.CTRL_TYPE.TITLE](controller.tagName, newTitle);
 	        document.title = newTitle;
 	      },
 
@@ -539,13 +528,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          document.title = oldTitle;
 	        }
 	      }
-	    }, _renderAndListen2[_classesController2['default'].CTRL_TYPE.ETC] = {
+	    }, _renderAndListen2[_classesController.CTRL_TYPE.ETC] = {
 	      onUpdate: function onUpdate(controller) {
 	        var element = ensureElement(controller);
 
 	        // Update attributes
 	        var newAttrs = controller.render();
-	        validator[_classesController2['default'].CTRL_TYPE.ETC](controller.tagName, newAttrs);
+	        validator[_classesController.CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
 	        Object.keys(newAttrs).forEach(function (attrName) {
 	          element.setAttribute(attrName, newAttrs[attrName]);
@@ -727,8 +716,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.__esModule = true;
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -747,48 +734,41 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _LinkedListNode3 = _interopRequireDefault(_LinkedListNode2);
 
+	var CTRL_TYPE = {
+	  TITLE: 'title',
+	  ETC: 'etc'
+	};
+
+	exports.CTRL_TYPE = CTRL_TYPE;
+
 	var Controller = (function (_LinkedListNode) {
 	  _inherits(Controller, _LinkedListNode);
 
-	  _createClass(Controller, null, [{
-	    key: 'CTRL_TYPE',
-
-	    /**
-	     * Controller types.
-	     */
-	    get: function get() {
-	      return {
-	        TITLE: 'title',
-	        ETC: 'etc'
-	      };
-	    }
-
-	    /**
-	     * Controller constructor.
-	     *
-	     * Controller is an object that manages an element in `<head>` element.
-	     * If multiple controllers are bound to one element, only the last bound
-	     * controller is used.
-	     * The last bound controller is called top controller.
-	     *
-	     * When top controller is removed, previous controller of that one becomes
-	     * the new top controller.
-	     *
-	     * @constructs Controller
-	     * @param {string} type Type of controller.
-	     * @param {string} tagName Element tag name.
-	     * @param {object} attrs Object containing key-value attribute pairs, which is
-	     * used to find element to bind controller to.
-	     * @param {function} render A function that returns new element value.
-	     * The type of return value depends on controller type.
-	     * @param {object} options Controller options.
-	     * @param {addListener} options.addListener A function that adds controller
-	     * listener to event emitter.
-	     * @param {removeListener} options.removeListener A function that removes
-	     * controller listener.
-	     * @return {Controller} a new Controller instance.
-	     */
-	  }]);
+	  /**
+	   * Controller constructor.
+	   *
+	   * Controller is an object that manages an element in `<head>` element.
+	   * If multiple controllers are bound to one element, only the last bound
+	   * controller is used.
+	   * The last bound controller is called top controller.
+	   *
+	   * When top controller is removed, previous controller of that one becomes
+	   * the new top controller.
+	   *
+	   * @constructs Controller
+	   * @param {string} type Type of controller.
+	   * @param {string} tagName Element tag name.
+	   * @param {object} attrs Object containing key-value attribute pairs, which is
+	   * used to find element to bind controller to.
+	   * @param {function} render A function that returns new element value.
+	   * The type of return value depends on controller type.
+	   * @param {object} options Controller options.
+	   * @param {addListener} options.addListener A function that adds controller
+	   * listener to event emitter.
+	   * @param {removeListener} options.removeListener A function that removes
+	   * controller listener.
+	   * @return {Controller} a new Controller instance.
+	   */
 
 	  function Controller(type, tagName, attrs, render) {
 	    var options = arguments.length <= 4 || arguments[4] === undefined ? {} : arguments[4];
@@ -816,7 +796,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_LinkedListNode3['default']);
 
 	exports['default'] = Controller;
-	module.exports = exports['default'];
 
 /***/ },
 /* 5 */
