@@ -6,10 +6,10 @@
   [![Linux Build][travis-image]][travis-url]
   [![Windows Build][appveyor-image]][appveyor-url]
   [![Coverage Status][coveralls-image]][coveralls-url]
-  
+
   [![Dependency Status][dependency-image]][dependency-url]
   [![devDependency Status][devDependency-image]][devDependency-url]
-  
+
   [![Sauce Test Status][saucelabs-image]][saucelabs-url]
 
 ```javascript
@@ -149,10 +149,10 @@ var emitter = new EventEmitter();
 
 // Listener per override
 var override = hairdresser.override({
-  addListener: function (callback) {
-    return emitter.addListener('update.override', callback);
+  addListener: function (listener) {
+    return emitter.addListener('update.override', listener);
   },
-  removeListener: function (token) {
+  removeListener: function (listener, token) {
     token.remove();
   },
 }).title(getTitle);
@@ -162,10 +162,10 @@ emitter.emit('update.override');
 // Listener per element
 var override = hairdresser.override()
   .title(getTitle, {
-    addListener: function (callback) {
-      return emitter.addListener('update.title', callback);
+    addListener: function (listener) {
+      return emitter.addListener('update.title', listener);
     },
-    removeListener: function (token) {
+    removeListener: function (listener, token) {
       token.remove();
     });
   });
