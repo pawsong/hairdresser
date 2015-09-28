@@ -21,12 +21,13 @@ const validator = {
 
 /**
  * @callback addListener
- * @param {function} callback A function to be bound to event emitter.
+ * @param {function} listener A function to be bound to event emitter.
  * @return {*} A value to pass to {@link removeListener}.
  */
 
 /**
  * @callback removeListener
+ * @param {function} listener A function to be removed from event emitter.
  * @param {*} addListenerReturnValue Return value of addListener
  */
 

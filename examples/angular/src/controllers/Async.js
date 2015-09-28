@@ -12,8 +12,8 @@ export function AsyncCtrl($scope, $timeout, hairdresser) {
   }, 1000);
 
   const override = hairdresser.override({
-    addListener: callback => $scope.$watch('data', callback),
-    removeListener: remove => remove(),
+    addListener: listener => $scope.$watch('data', listener),
+    removeListener: (listener, remove) => remove(),
   })
     .title(() => $scope.data.title)
     .meta({ name: 'body' }, () => ({ content: $scope.data.body }));
@@ -37,12 +37,12 @@ export function AsyncPerElementCtrl($scope, $timeout, hairdresser) {
 
   const override = hairdresser.override()
     .title(() => $scope.title, {
-      addListener: callback => $scope.$watch('title', callback),
-      removeListener: remove => remove(),
+      addListener: listener => $scope.$watch('title', listener),
+      removeListener: (listener, remove) => remove(),
     })
     .meta({ name: 'body' }, () => ({ content: $scope.body }), {
-      addListener: callback => $scope.$watch('body', callback),
-      removeListener: remove => remove(),
+      addListener: listener => $scope.$watch('body', listener),
+      removeListener: (listener, remove) => remove(),
     });
 
   $scope.$on('$destroy', () => {

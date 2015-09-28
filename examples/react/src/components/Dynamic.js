@@ -16,12 +16,12 @@ export default class Dynamic extends React.Component {
 
     this.override = this.context.hairdresser.override()
       .title(() => this.state.title, {
-        addListener: callback => this.emitter.addListener('title', callback),
-        removeListener: token => token.remove(),
+        addListener: listener => this.emitter.addListener('title', listener),
+        removeListener: (listener, token) => token.remove(),
       })
       .meta({ name: 'body' }, () => ({ content: this.state.body }), {
-        addListener: callback => this.emitter.addListener('body', callback),
-        removeListener: token => token.remove(),
+        addListener: listener => this.emitter.addListener('body', listener),
+        removeListener: (listener, token) => token.remove(),
       });
   }
 
