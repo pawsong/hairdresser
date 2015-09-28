@@ -1,4 +1,4 @@
-import {EventEmitter} from 'fbemitter';
+import EventEmitter from 'eventemitter3';
 
 import Hairdresser from '../src/Hairdresser';
 
@@ -241,8 +241,8 @@ describe('Hairdresser', () => {
       hairdresser.render();
 
       hairdresser.override({
-        addListener: callback => emitter.addListener('override', callback),
-        removeListener: token => token.remove(),
+        addListener: listener => emitter.addListener('override', listener),
+        removeListener: listener => emitter.removeListener('override', listener),
       })
         .title(() => title)
         .meta({ key: 'value' }, () => ({ content: meta }))
@@ -278,16 +278,16 @@ describe('Hairdresser', () => {
 
       hairdresser.override()
         .title(() => title, {
-          addListener: callback => emitter.addListener('title', callback),
-          removeListener: token => token.remove(),
+          addListener: listener => emitter.addListener('title', listener),
+          removeListener: listener => emitter.removeListener('title', listener),
         })
         .meta({ key: 'value' }, () => ({ content: meta }), {
-          addListener: callback => emitter.addListener('meta', callback),
-          removeListener: token => token.remove(),
+          addListener: listener => emitter.addListener('meta', listener),
+          removeListener: listener => emitter.removeListener('meta', listener),
         })
         .link({ key: 'value' }, () => ({ content: link }), {
-          addListener: callback => emitter.addListener('link', callback),
-          removeListener: token => token.remove(),
+          addListener: listener => emitter.addListener('link', listener),
+          removeListener: listener => emitter.removeListener('link', listener),
         });
 
       expect(getSortedHeadString()).toBe(
@@ -330,8 +330,8 @@ describe('Hairdresser', () => {
 
       const override = hairdresser.override()
         .meta({ key: 'value' }, { content: 'meta' }, {
-          addListener: callback => emitter.addListener('meta', callback),
-          removeListener: token => token.remove(),
+          addListener: listener => emitter.addListener('meta', listener),
+          removeListener: listener => emitter.removeListener('meta', listener),
         });
 
       expect(getSortedHeadString()).toBe(

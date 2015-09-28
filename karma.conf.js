@@ -30,7 +30,6 @@ module.exports = function(config) { // eslint-disable-line func-names
 
     files: [
       'node_modules/es5-shim/es5-shim.js',
-      'node_modules/es5-shim/es5-sham.js',
       'test/index.js',
     ],
 

@@ -1,4 +1,4 @@
-import {EventEmitter} from 'fbemitter';
+import EventEmitter from 'eventemitter3';
 
 import Hairdresser from '../src/Hairdresser';
 import Controller, {CTRL_TYPE} from '../src/classes/Controller';
@@ -53,8 +53,8 @@ describe('Override', () => {
 
       const render = jasmine.createSpy();
       hairdresser.override({
-        addListener: callback => emitter.addListener('event', callback),
-        removeListener: token => token.remove(),
+        addListener: listener => emitter.addListener('event', listener),
+        removeListener: listener => emitter.removeListener('event', listener),
       }).title(render);
       expect(render.calls.count()).toBe(1);
 

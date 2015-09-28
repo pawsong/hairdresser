@@ -21,9 +21,10 @@ class OverrideListener {
 
     if (this._override.addListener && !this.listening) {
       this.listening = true;
-      this._addListenerRet = this._override.addListener(() => {
+      this._listener = () => {
         this.onUpdate();
-      });
+      };
+      this._addListenerRet = this._override.addListener(this._listener);
     }
   }
 
@@ -31,7 +32,7 @@ class OverrideListener {
     removeItem(this._controllerListeners, controllerListener);
 
     if (this.listening && this._controllerListeners.length === 0) {
-      this._override.removeListener(this._addListenerRet);
+      this._override.removeListener(this._listener, this._addListenerRet);
       this.listening = false;
     }
   }
@@ -65,9 +66,10 @@ class ControllerListener {
   startListening() {
     this._overrideListener.addControllerListener(this);
     if (this._controller.addListener) {
-      this._addListenerRet = this._controller.addListener(() => {
+      this._listener = () => {
         this.onUpdate();
-      });
+      };
+      this._addListenerRet = this._controller.addListener(this._listener);
     }
     this._listening = true;
     return this;
@@ -76,7 +78,7 @@ class ControllerListener {
   stopListening() {
     this._overrideListener.removeControllerListener(this);
     if (this._controller.removeListener) {
-      this._controller.removeListener(this._addListenerRet);
+      this._controller.removeListener(this._listener, this._addListenerRet);
     }
     this._listening = false;
     return this;

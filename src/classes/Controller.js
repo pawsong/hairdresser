@@ -1,14 +1,23 @@
 import invariant from 'invariant';
 
 import Attrs from './Attrs';
-import LinkedListNode from './LinkedListNode';
 
 export const CTRL_TYPE = {
   TITLE: 'title',
   ETC: 'etc',
 };
 
-export default class Controller extends LinkedListNode {
+function link(prev, next) {
+  if (prev) {
+    prev.next = next;
+  }
+
+  if (next) {
+    next.prev = prev;
+  }
+}
+
+export default class Controller {
 
   /**
    * Controller constructor.
@@ -36,8 +45,6 @@ export default class Controller extends LinkedListNode {
    * @return {Controller} a new Controller instance.
    */
   constructor(type, tagName, attrs, render, options = {}) {
-    super();
-
     invariant(typeof render === 'function', 'render function is required');
     invariant(!options.addListener || options.removeListener,
               'addListener requires removeListener');
@@ -52,5 +59,16 @@ export default class Controller extends LinkedListNode {
 
     this.addListener = options.addListener;
     this.removeListener = options.removeListener;
+  }
+
+  insertAfter(node) {
+    link(node, this.next);
+    link(this, node);
+  }
+
+  unlink() {
+    link(this.prev, this.next);
+    this.prev = undefined;
+    this.next = undefined;
   }
 }

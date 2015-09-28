@@ -47,6 +47,7 @@
     "eslint": "^1.5.1",
     "eslint-config-airbnb": "0.0.9",
     "eslint-plugin-react": "^3.3.2",
+    "eventemitter3": "^1.1.1",
     "fbemitter": "^2.0.0",
     "gh-pages": "^0.4.0",
     "isparta-loader": "^1.0.0",
