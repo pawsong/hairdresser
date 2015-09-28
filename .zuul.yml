@@ -1,0 +1,20 @@
+ui: jasmine2
+scripts:
+  - node_modules/es5-shim/es5-shim.js
+browserify:
+  - transform: babelify
+browsers:
+  - name: android
+    version: [oldest, latest]
+  - name: chrome
+    version: [oldest, latest]
+  - name: firefox
+    version: [3.5, latest]
+  - name: ie
+    version: 8..latest
+  - name: iphone
+    version: [oldest, latest]
+  - name: opera
+    version: oldest..latest
+  - name: safari
+    version: oldest..latest
