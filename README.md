@@ -143,6 +143,8 @@ onDataReceived(function () {
 
 The other one is using event listeners. A listener can be added to `override` and each element.
 
+Many event emitter's listener adding functions return listener removing function. For those cases, to manage the removing function in a simple way, the return value of addListener is passed to removeListener as the second parameter.
+
 ```javascript
 // Use fbemitter (https://github.com/facebook/emitter)
 var emitter = new EventEmitter();
