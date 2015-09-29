@@ -25,14 +25,6 @@ hairdresser.render();
 * Hierarchical state friendly API
 * Server-side rendering
 
-# Browser Support
-- Chrome
-- Firefox
-- Safari
-- Opera
-- Recent mobile browsers
-- IE 8+ (IE 8 with es5-shim)
-
 # Motivation
 ## Independence from framework
 There are already good projects for managing `<title>`, `<meta>` and `<link>` elements. Following are some of the projects:
