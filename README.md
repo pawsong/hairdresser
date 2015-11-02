@@ -1,4 +1,4 @@
-# Hairdresser
+<img src="https://github.com/pawsong/hairdresser/blob/master/resources/logo.png" alt="logo.png" width="450px">
 
   A universal js library for managing head DOM elements (title, link and meta)
   
