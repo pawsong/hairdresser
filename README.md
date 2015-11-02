@@ -1,7 +1,7 @@
-<img src="https://github.com/pawsong/hairdresser/blob/master/resources/logo.png" alt="logo.png" width="450px">
+<img src="https://raw.githubusercontent.com/pawsong/hairdresser/master/resources/logo.png" alt="logo.png" width="450px">
 
   A universal js library for managing head DOM elements (title, link and meta)
-  
+
   Browser support includes every sane browser and IE8+. (IE8 with [es5-shim](https://github.com/es-shims/es5-shim))
 
   [![NPM Version][npm-image]][npm-url]
