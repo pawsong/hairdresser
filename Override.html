@@ -214,327 +214,6 @@ and previous top controller stops listening.</p>
 
     
 
-    <h4 class="name" id="addController"><span class="type-signature"></span>addController<span class="signature">(type, tagName, attrs, render, options)</span><span class="type-signature"> &rarr; {<a href="Override.html">Override</a>}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Add controller for arbitrary element.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>type</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Type of controller.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tagName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Element tag name.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>attrs</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Object containing key-value attribute pairs which
-is used to find element to bind controller to.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>render</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">*</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>A value that replaces element contents or a function
-that returns the element replacing value.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Options for element controller.</p>
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>addListener</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#addListener">addListener</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>A function that adds controller
-listener to event emitter.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>removeListener</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#removeListener">removeListener</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>A function that removes
-controller listener.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line136">line 136</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Itself.</p>
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Override.html">Override</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
     <h4 class="name" id="link"><span class="type-signature"></span>link<span class="signature">(attrs, render, options)</span><span class="type-signature"> &rarr; {<a href="Override.html">Override</a>}</span></h4>
 
     
@@ -714,6 +393,29 @@ controller listener.</p></td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>close</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Whether to append closing tag.</p></td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -758,7 +460,7 @@ controller listener.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line204">line 204</a>
+        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line229">line 229</a>
     </li></ul></dd>
     
 
@@ -990,6 +692,29 @@ controller listener.</p></td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>close</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Whether to append closing tag.</p></td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -1034,7 +759,7 @@ controller listener.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line184">line 184</a>
+        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line208">line 208</a>
     </li></ul></dd>
     
 
@@ -1141,7 +866,7 @@ controller will be removed.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line231">line 231</a>
+        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line256">line 256</a>
     </li></ul></dd>
     
 
@@ -1176,6 +901,328 @@ controller will be removed.</p>
     <dd>
         
 <span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="tag"><span class="type-signature"></span>tag<span class="signature">(tagName, attrs, render, options)</span><span class="type-signature"> &rarr; {<a href="Override.html">Override</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Add controller for element with given tag name.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tagName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Element tag name.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attrs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Object containing key-value attribute pairs which
+is used to find element to bind controller to.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>render</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An object that represents new key-value attribute pairs
+which will be added to controller's element or a function that returns
+the object.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Options for element controller.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>addListener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#addListener">addListener</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A function that adds controller
+listener to event emitter.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>removeListener</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#removeListener">removeListener</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A function that removes
+controller listener.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>close</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Whether to append closing tag.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line187">line 187</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Itself.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Override.html">Override</a></span>
 
 
     </dd>
@@ -1388,7 +1435,7 @@ controller listener.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line164">line 164</a>
+        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line165">line 165</a>
     </li></ul></dd>
     
 
@@ -1492,7 +1539,7 @@ controller listener.</p></td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line214">line 214</a>
+        <a href="Hairdresser.js.html">Hairdresser.js</a>, <a href="Hairdresser.js.html#line239">line 239</a>
     </li></ul></dd>
     
 
@@ -1558,7 +1605,7 @@ controller listener.</p></td>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Mon Sep 28 2015 22:15:30 GMT+0900 (KST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Mon Nov 02 2015 13:30:58 GMT+0900 (KST)
 </footer>
 
 <script> prettyPrint(); </script>
