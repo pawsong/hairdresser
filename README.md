@@ -1,4 +1,4 @@
-# Hairdresser
+[![logo.png][logo-image]][github-url]
 
   A universal js library for managing head DOM elements (title, link and meta)
   
@@ -211,6 +211,9 @@ Refer to [Roadmap documentation](/ROADMAP.md)
 
 # License
 MIT
+
+[logo-image]: https://github.com/pawsong/hairdresser/blob/master/resources/logo.png
+[github-url]: https://github.com/pawsong/hairdresser
 
 [npm-image]: https://img.shields.io/npm/v/hairdresser.svg
 [npm-url]: https://npmjs.org/package/hairdresser
