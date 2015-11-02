@@ -61,16 +61,53 @@ describe('Hairdresser', () => {
     });
 
     it('should return HTML markup string', () => {
+      // Defaults
       const hairdresser = Hairdresser.create();
       hairdresser.override()
         .title('Hello, world!')
-        .link({ rel: 'canonical' }, { href: 'http://www.test.com/this-is-test.html' })
-        .meta({ name: 'twitter:title' }, { content: 'Hello, world!' });
+        .link({ key: 'key1' }, { value: 'value1' })
+        .meta({ key: 'key1' }, { value: 'value1' })
+        .tag('ta', { key: 'key1' }, { value: 'value1' })
+        .tag('tb', { key: 'key1' }, { value: 'value1' }, { close: true });
 
-      const html = hairdresser.renderToString();
-      expect(html).toBe(
-        '<link rel="canonical" href="http://www.test.com/this-is-test.html">' +
-        '<meta name="twitter:title" content="Hello, world!">' +
+      expect(
+        hairdresser.renderToString()
+      ).toBe(
+        '<link key="key1" value="value1">' +
+        '<meta key="key1" value="value1">' +
+        '<ta key="key1" value="value1">' +
+        '<tb key="key1" value="value1"></tb>' +
+        '<title>Hello, world!</title>'
+      );
+
+      // Override
+      const override = hairdresser.override()
+        .title('Hello, world!')
+        .link({ key: 'key1' }, { value: 'value2' })
+        .meta({ key: 'key1' }, { value: 'value2' })
+        .tag('ta', { key: 'key1' }, { value: 'value2' })
+        .tag('tb', { key: 'key1' }, { value: 'value2' }, { close: true });
+
+      expect(
+        hairdresser.renderToString()
+      ).toBe(
+        '<link key="key1" value="value2">' +
+        '<meta key="key1" value="value2">' +
+        '<ta key="key1" value="value2">' +
+        '<tb key="key1" value="value2"></tb>' +
+        '<title>Hello, world!</title>'
+      );
+
+      // Restore
+      override.restore();
+
+      expect(
+        hairdresser.renderToString()
+      ).toBe(
+        '<link key="key1" value="value1">' +
+        '<meta key="key1" value="value1">' +
+        '<ta key="key1" value="value1">' +
+        '<tb key="key1" value="value1"></tb>' +
         '<title>Hello, world!</title>'
       );
     });
@@ -105,6 +142,7 @@ describe('Hairdresser', () => {
         const element = elements[i];
         if (oldHeadChildren.indexOf(element) === -1) {
           element.parentNode.removeChild(element);
+          i = i - 1;
         }
       }
     }
@@ -186,7 +224,9 @@ describe('Hairdresser', () => {
       const hairdresser = Hairdresser.create();
       hairdresser.override()
         .meta({ key: 'value' }, { content: 'meta value' })
-        .link({ key: 'value' }, { content: 'link value' });
+        .link({ key: 'value' }, { content: 'link value' })
+        .tag('ta', { key: 'key1' }, { value: 'value1' })
+        .tag('tb', { key: 'key1' }, { value: 'value1' }, { close: true });
 
       hairdresser.render();
 
@@ -194,6 +234,8 @@ describe('Hairdresser', () => {
       expect(getSortedHeadString()).toBe(
         '<link content="link value" key="value">' +
         '<meta content="meta value" key="value">' +
+        '<ta key="key1" value="value1">' +
+        '<tb key="key1" value="value1">' +
         '<title></title>'
       );
     });
@@ -205,23 +247,31 @@ describe('Hairdresser', () => {
       hairdresser.override()
         .title(() => 'title value')
         .meta({ key: 'value' }, { content: 'meta value' })
-        .link({ key: 'value' }, { content: 'link value' });
+        .link({ key: 'value' }, { content: 'link value' })
+        .tag('ta', { key: 'key1' }, { value: 'value1' })
+        .tag('tb', { key: 'key1' }, { value: 'value1' }, { close: true });
 
       expect(getSortedHeadString()).toBe(
         // Override method call order
         '<link content="link value" key="value">' +
         '<meta content="meta value" key="value">' +
+        '<ta key="key1" value="value1">' +
+        '<tb key="key1" value="value1">' +
         '<title>title value</title>'
       );
 
       hairdresser.override()
         .title(() => 'overridden title value')
         .meta({ key: 'value' }, { content: 'overridden meta value' })
-        .link({ key: 'value' }, { content: 'overridden link value' });
+        .link({ key: 'value' }, { content: 'overridden link value' })
+        .tag('ta', { key: 'key1' }, { value: 'value2' })
+        .tag('tb', { key: 'key1' }, { value: 'value2' }, { close: true });
 
       expect(getSortedHeadString()).toBe(
         '<link content="overridden link value" key="value">' +
         '<meta content="overridden meta value" key="value">' +
+        '<ta key="key1" value="value2">' +
+        '<tb key="key1" value="value2">' +
         '<title>overridden title value</title>'
       );
     });
@@ -233,7 +283,9 @@ describe('Hairdresser', () => {
       hairdresser.override()
         .title(() => 'Hairdresser')
         .meta({ key: 'value' }, { content: 'meta value' })
-        .link({ key: 'value' }, { content: 'link value' });
+        .link({ key: 'value' }, { content: 'link value' })
+        .tag('ta', { key: 'key1' }, { value: 'value2' })
+        .tag('tb', { key: 'key1' }, { value: 'value2' }, { close: true });
 
       const stopRendering = hairdresser.render();
       expect(stopRendering).toEqual(jasmine.any(Function));
@@ -252,6 +304,8 @@ describe('Hairdresser', () => {
       let title = 'old title';
       let meta = 'old meta';
       let link = 'old link';
+      let ta = 'old ta';
+      let tb = 'old tb';
 
       const hairdresser = Hairdresser.create();
       hairdresser.render();
@@ -262,22 +316,30 @@ describe('Hairdresser', () => {
       })
         .title(() => title)
         .meta({ key: 'value' }, () => ({ content: meta }))
-        .link({ key: 'value' }, () => ({ content: link }));
+        .link({ key: 'value' }, () => ({ content: link }))
+        .tag('ta', { key: 'key1' }, () => ({ value: ta }))
+        .tag('tb', { key: 'key1' }, () => ({ value: tb }), { close: true });
 
       expect(getSortedHeadString()).toBe(
         '<link content="old link" key="value">' +
         '<meta content="old meta" key="value">' +
+        '<ta key="key1" value="old ta">' +
+        '<tb key="key1" value="old tb">' +
         '<title>old title</title>'
       );
 
       title = 'new title';
       meta = 'new meta';
       link = 'new link';
+      ta = 'new ta';
+      tb = 'new tb';
 
       emitter.emit('override');
       expect(getSortedHeadString()).toBe(
         '<link content="new link" key="value">' +
         '<meta content="new meta" key="value">' +
+        '<ta key="key1" value="new ta">' +
+        '<tb key="key1" value="new tb">' +
         '<title>new title</title>'
       );
     });
@@ -288,6 +350,8 @@ describe('Hairdresser', () => {
       let title = 'old title';
       let meta = 'old meta';
       let link = 'old link';
+      let ta = 'old ta';
+      let tb = 'old tb';
 
       const hairdresser = Hairdresser.create();
       hairdresser.render();
@@ -304,22 +368,36 @@ describe('Hairdresser', () => {
         .link({ key: 'value' }, () => ({ content: link }), {
           addListener: listener => emitter.addListener('link', listener),
           removeListener: listener => emitter.removeListener('link', listener),
+        })
+        .tag('ta', { key: 'value' }, () => ({ content: ta }), {
+          addListener: listener => emitter.addListener('ta', listener),
+          removeListener: listener => emitter.removeListener('ta', listener),
+        })
+        .tag('tb', { key: 'value' }, () => ({ content: tb }), {
+          addListener: listener => emitter.addListener('tb', listener),
+          removeListener: listener => emitter.removeListener('tb', listener),
         });
 
       expect(getSortedHeadString()).toBe(
         '<link content="old link" key="value">' +
         '<meta content="old meta" key="value">' +
+        '<ta content="old ta" key="value">' +
+        '<tb content="old tb" key="value">' +
         '<title>old title</title>'
       );
 
       title = 'new title';
       meta = 'new meta';
       link = 'new link';
+      ta = 'new ta';
+      tb = 'new tb';
 
       emitter.emit('title');
       expect(getSortedHeadString()).toBe(
         '<link content="old link" key="value">' +
         '<meta content="old meta" key="value">' +
+        '<ta content="old ta" key="value">' +
+        '<tb content="old tb" key="value">' +
         '<title>new title</title>'
       );
 
@@ -327,6 +405,8 @@ describe('Hairdresser', () => {
       expect(getSortedHeadString()).toBe(
         '<link content="old link" key="value">' +
         '<meta content="new meta" key="value">' +
+        '<ta content="old ta" key="value">' +
+        '<tb content="old tb" key="value">' +
         '<title>new title</title>'
       );
 
@@ -334,6 +414,26 @@ describe('Hairdresser', () => {
       expect(getSortedHeadString()).toBe(
         '<link content="new link" key="value">' +
         '<meta content="new meta" key="value">' +
+        '<ta content="old ta" key="value">' +
+        '<tb content="old tb" key="value">' +
+        '<title>new title</title>'
+      );
+
+      emitter.emit('ta');
+      expect(getSortedHeadString()).toBe(
+        '<link content="new link" key="value">' +
+        '<meta content="new meta" key="value">' +
+        '<ta content="new ta" key="value">' +
+        '<tb content="old tb" key="value">' +
+        '<title>new title</title>'
+      );
+
+      emitter.emit('tb');
+      expect(getSortedHeadString()).toBe(
+        '<link content="new link" key="value">' +
+        '<meta content="new meta" key="value">' +
+        '<ta content="new ta" key="value">' +
+        '<tb content="new tb" key="value">' +
         '<title>new title</title>'
       );
     });

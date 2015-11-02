@@ -59,6 +59,8 @@ export default class Controller {
 
     this.addListener = options.addListener;
     this.removeListener = options.removeListener;
+
+    this.needsToClose = !!options.close;
   }
 
   insertAfter(node) {

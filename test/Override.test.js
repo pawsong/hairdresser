@@ -175,6 +175,42 @@ describe('Override', () => {
     });
   });
 
+  describe('#tag', () => {
+    it('should override controller of given tag name', () => {
+      const hairdresser = Hairdresser.create();
+      const override1 = hairdresser.override();
+
+      const tagName = 'base';
+
+      // Default values
+      override1.tag(tagName, { name: 'value' }, {});
+
+      const controller1 =  override1.getController(tagName, { name: 'value' });
+      expect(controller1.render()).toEqual({});
+
+      expect(
+        hairdresser._getActiveController(tagName, { name: 'value' })
+      ).toBe(controller1);
+
+      // Override
+      const override2 = hairdresser.override();
+      override2.tag(tagName, { name: 'value' }, {});
+
+      const controller2 =  override2.getController(tagName, { name: 'value' });
+      expect(controller2.render()).toEqual({});
+
+      expect(
+        hairdresser._getActiveController(tagName, { name: 'value' })
+      ).toBe(controller2);
+
+      // Restore
+      override2.restore();
+      expect(
+        hairdresser._getActiveController(tagName, { name: 'value' })
+      ).toBe(controller1);
+    });
+  });
+
   describe('#meta', () => {
     it('should override <meta> controller', () => {
       const hairdresser = Hairdresser.create();
