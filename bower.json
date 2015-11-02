@@ -1,6 +1,6 @@
 {
   "name": "hairdresser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A universal js library for managing head DOM elements (title, link, and meta)",
   "homepage": "https://github.com/pawsong/hairdresser",
   "authors": [

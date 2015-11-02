@@ -191,6 +191,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Add controller for arbitrary element.
 	     *
 	     * @memberof Override
+	     * @private
 	     * @param {string} type Type of controller.
 	     * @param {string} tagName Element tag name.
 	     * @param {object} attrs Object containing key-value attribute pairs which
@@ -240,6 +241,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    /**
+	     * Add controller for element with given tag name.
+	     *
+	     * @memberof Override
+	     * @param {string} tagName Element tag name.
+	     * @param {object} attrs Object containing key-value attribute pairs which
+	     * is used to find element to bind controller to.
+	     * @param {*} render An object that represents new key-value attribute pairs
+	     * which will be added to controller's element or a function that returns
+	     * the object.
+	     * @param {object} options Options for element controller.
+	     * @param {addListener} options.addListener A function that adds controller
+	     * listener to event emitter.
+	     * @param {removeListener} options.removeListener A function that removes
+	     * controller listener.
+	     * @param {boolean} options.close Whether to append closing tag.
+	     * @return {Override} Itself.
+	     */
+	    Override.prototype.tag = function tag(tagName, attrs, render, options) {
+	      return this.addController(_classesController.CTRL_TYPE.ETC, tagName, attrs, render, options);
+	    };
+
+	    /**
 	     * Add controller for `<meta>` element.
 	     *
 	     * @memberof Override
@@ -253,10 +276,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * listener to event emitter.
 	     * @param {removeListener} options.removeListener A function that removes
 	     * controller listener.
+	     * @param {boolean} options.close Whether to append closing tag.
 	     * @return {Override} Itself.
 	     */
 	    Override.prototype.meta = function meta(attrs, render, options) {
-	      return this.addController(_classesController.CTRL_TYPE.ETC, 'meta', attrs, render, options);
+	      return this.tag('meta', attrs, render, options);
 	    };
 
 	    /**
@@ -273,10 +297,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * listener to event emitter.
 	     * @param {removeListener} options.removeListener A function that removes
 	     * controller listener.
+	     * @param {boolean} options.close Whether to append closing tag.
 	     * @return {Override} Itself.
 	     */
 	    Override.prototype.link = function link(attrs, render, options) {
-	      return this.addController(_classesController.CTRL_TYPE.ETC, 'link', attrs, render, options);
+	      return this.tag('link', attrs, render, options);
 	    };
 
 	    /**
@@ -444,8 +469,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var newAttrs = controller.render();
 	        validator[_classesController.CTRL_TYPE.ETC](controller.tagName, newAttrs);
 
+	        var newAttrsStr = _classesAttrs2['default'].toHtml(newAttrs);
+
 	        // Update attributes
-	        result.push('<' + controller.tagName + ' ' + controller.attrs.html + ' ' + _classesAttrs2['default'].toHtml(newAttrs) + '>');
+	        result.push('<' + controller.tagName + ' ' + controller.attrs.html + ((newAttrsStr ? ' ' + newAttrsStr : '') + '>') + (controller.needsToClose ? '</' + controller.tagName + '>' : ''));
 	      }
 	    }, _renderOnce2));
 
@@ -791,6 +818,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.addListener = options.addListener;
 	    this.removeListener = options.removeListener;
+
+	    this.needsToClose = !!options.close;
 	  }
 
 	  Controller.prototype.insertAfter = function insertAfter(node) {
