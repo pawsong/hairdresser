@@ -1,4 +1,6 @@
-require('ts-node/register');
+require('ts-node').register({
+  compilerOptions: require('../compilerOptions'),
+});
 
 var Jasmine = require('jasmine');
 var SpecReporter = require('jasmine-spec-reporter');

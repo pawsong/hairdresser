@@ -43,7 +43,7 @@ module.exports = function(config) {
 
     browserify: {
       debug: true,
-      plugin: ['tsify'],
+      plugin: [['tsify', require('./compilerOptions')]],
       transform: transform,
     },
 
