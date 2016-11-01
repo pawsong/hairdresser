@@ -2,7 +2,7 @@ ui: jasmine2
 scripts:
   - node_modules/es5-shim/es5-shim.js
 browserify:
-  - transform: babelify
+  - plugin: tsify
 browsers:
   - name: android
     version: [oldest, latest]

@@ -1,10 +1,8 @@
-/* eslint no-var: 0 */
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
-  entry: {
-    app: ['webpack/hot/dev-server', './src/main.js'],
-  },
+  entry: './src/entry.js',
 
   output: {
     path: './build',
@@ -14,7 +12,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.css$/, loader: 'style!css' },
     ],
   },
 
@@ -28,4 +26,10 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
   ],
+
+  dev: 'cheap-module-source-map',
+
+  devServer: {
+    open: true,
+  },
 };

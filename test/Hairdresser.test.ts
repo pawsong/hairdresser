@@ -1,8 +1,10 @@
-import EventEmitter from 'eventemitter3';
+import { EventEmitter } from 'events';
 
 import Hairdresser from '../src/Hairdresser';
-
+import Override from '../src/Override';
 import {canUseDOM} from '../src/utils';
+
+const _undefined: any = undefined;
 
 describe('Hairdresser', () => {
   describe('.create', () => {
@@ -15,8 +17,6 @@ describe('Hairdresser', () => {
   describe('#override', () => {
     it('should return a new Override instance', () => {
       const hairdresser = Hairdresser.create();
-      const Override = hairdresser.Override;
-
       const override = hairdresser.override();
 
       expect(override).toEqual(jasmine.any(Override));
@@ -29,17 +29,17 @@ describe('Hairdresser', () => {
       const hairdresser1 = Hairdresser.create();
 
       expect(() => {
-        hairdresser1.override().title(undefined);
+        hairdresser1.override().title(_undefined);
         hairdresser1.renderToString();
-      }).toThrowError('Invariant Violation: render value for <title> must be a string');
+      }).toThrowError('render value for <title> must be a string');
 
       // Dynamic case (use function that returns string)
       const hairdresser2 = Hairdresser.create();
-      hairdresser2.override().title(() => undefined);
+      hairdresser2.override().title(() => _undefined);
 
       expect(() => {
         hairdresser2.renderToString();
-      }).toThrowError('Invariant Violation: render value for <title> must be a string');
+      }).toThrowError('render value for <title> must be a string');
     });
 
     it('should throw error when element controller returns non object value', () => {
@@ -47,17 +47,17 @@ describe('Hairdresser', () => {
       const hairdresser1 = Hairdresser.create();
 
       expect(() => {
-        hairdresser1.override().meta({ title: 'name' }, undefined);
+        hairdresser1.override().meta({ title: 'name' }, _undefined);
         hairdresser1.renderToString();
-      }).toThrowError('Invariant Violation: render value for <meta> must be an object');
+      }).toThrowError('render value for <meta> must be an object');
 
       // Dynamic case (use function that returns object literal)
       const hairdresser2 = Hairdresser.create();
-      hairdresser2.override().meta({ title: 'name' }, () => undefined);
+      hairdresser2.override().meta({ title: 'name' }, () => _undefined);
 
       expect(() => {
         hairdresser2.renderToString();
-      }).toThrowError('Invariant Violation: render value for <meta> must be an object');
+      }).toThrowError('render value for <meta> must be an object');
     });
 
     it('should return HTML markup string', () => {
@@ -120,7 +120,7 @@ describe('Hairdresser', () => {
         expect(() => {
           hairdresser.render();
         }).toThrowError(
-          'Invariant Violation: Cannot use DOM object. Make sure `window` ' +
+          'Cannot use DOM object. Make sure `window` ' +
           'and `document` are available globally.'
         );
       });
@@ -129,7 +129,7 @@ describe('Hairdresser', () => {
 
     const head = document.getElementsByTagName('head')[0];
 
-    const oldHeadChildren = [];
+    const oldHeadChildren: Element[] = [];
     for (let i = 0; i < head.children.length; ++i) {
       oldHeadChildren.push(head.children[i]);
     }
@@ -148,7 +148,7 @@ describe('Hairdresser', () => {
     }
 
     function getSortedHeadString() {
-      const children = [];
+      const children: Element[] = [];
       for (let i = 0; i < head.children.length; ++i) {
         children.push(head.children[i]);
       }
@@ -161,7 +161,7 @@ describe('Hairdresser', () => {
           return '';
         }
 
-        const attribs = [];
+        const attribs: string[] = [];
         for (let i = 0; i < child.attributes.length; ++i) {
           const attrib = child.attributes[i];
           attribs.push(`${attrib.name}="${attrib.value}"`);
@@ -183,7 +183,7 @@ describe('Hairdresser', () => {
       expect(() => {
         hairdresser1.override().title(undefined);
         hairdresser1.render();
-      }).toThrowError('Invariant Violation: render value for <title> must be a string');
+      }).toThrowError('render value for <title> must be a string');
 
       // Dynamic case (use function that returns string)
       const hairdresser2 = Hairdresser.create();
@@ -191,7 +191,7 @@ describe('Hairdresser', () => {
 
       expect(() => {
         hairdresser2.render();
-      }).toThrowError('Invariant Violation: render value for <title> must be a string');
+      }).toThrowError('render value for <title> must be a string');
     });
 
     it('should throw error when element controller returns non object value', () => {
@@ -201,7 +201,7 @@ describe('Hairdresser', () => {
       expect(() => {
         hairdresser1.override().meta({ title: 'name' }, undefined);
         hairdresser1.render();
-      }).toThrowError('Invariant Violation: render value for <meta> must be an object');
+      }).toThrowError('render value for <meta> must be an object');
 
       // Dynamic case (use function that returns object literal)
       const hairdresser2 = Hairdresser.create();
@@ -209,7 +209,7 @@ describe('Hairdresser', () => {
 
       expect(() => {
         hairdresser2.render();
-      }).toThrowError('Invariant Violation: render value for <meta> must be an object');
+      }).toThrowError('render value for <meta> must be an object');
     });
 
     it('should replace document title with return value of title render function', () => {

@@ -1,10 +1,10 @@
-import Attrs from '../src/classes/Attrs';
-import Controller from '../src/classes/Controller';
+import Attrs, { toHtml } from '../src/Attrs';
+import Controller, { CtrlType } from '../src/Controller';
 
 describe('Attrs', () => {
   describe('static toHtml', () => {
     it('should return attribute string used in HTML', () => {
-      const ret = Attrs.toHtml({
+      const ret = toHtml({
         name1: 'value1',
         name2: 'value2',
         name3: 'value3',
@@ -16,7 +16,7 @@ describe('Attrs', () => {
 
   describe('each', () => {
     it('should iterate over all the properties', () => {
-      const data = {
+      const data: { [index: string]: string } = {
         name1: 'value1',
         name2: 'value2',
         name3: 'value3',
@@ -24,12 +24,13 @@ describe('Attrs', () => {
 
       const attrs = new Attrs(data);
 
-      const keysIterated = [];
+      const keysIterated: string[] = [];
       attrs.each((name, value) => {
         expect(data[name]).toBe(value);
         expect(value).toBe(data[name]);
 
         keysIterated.push(name);
+        return true;
       });
 
       expect(keysIterated).toEqual(['name1', 'name2', 'name3']);
@@ -44,9 +45,10 @@ describe('Attrs', () => {
 
       const attrs = new Attrs(data);
 
-      const keysIterated = [];
+      const keysIterated: string[] = [];
       attrs.each(name => {
         keysIterated.push(name);
+        return true;
       });
 
       expect(keysIterated).toEqual(['name1', 'name2', 'name3']);
@@ -61,13 +63,14 @@ describe('Attrs', () => {
 
       const attrs = new Attrs(data);
 
-      let keysIterated;
-      let ret;
+      let keysIterated: string[];
+      let ret: boolean;
 
       // When not stopped
       keysIterated = [];
       ret = attrs.each(name => {
         keysIterated.push(name);
+        return true;
       });
       expect(ret).toBe(true);
       expect(keysIterated).toEqual(['name1', 'name2', 'name3']);
@@ -88,24 +91,22 @@ describe('Attrs', () => {
 
 describe('Controller', () => {
   function createEmptyController() {
-    return new Controller(Controller.TITLE, 'title', {}, () => '');
+    return new Controller(CtrlType.TITLE, 'title', {}, () => '');
   }
 
-  describe('constructor', () => {
-    /* eslint no-new: 0 */
-
+  describe('Constructor', () => {
     it('should throw an error when render function is missing', () => {
       expect(() => {
-        new Controller();
-      }).toThrowError('Invariant Violation: render function is required');
+        new (Controller as any)();
+      }).toThrowError('render function is required');
     });
 
     it('should throw an error when addListener is passed without removeListener', () => {
       expect(() => {
-        new Controller(Controller.TITLE, 'title', {}, () => '', {
+        new Controller(CtrlType.TITLE, 'title', {}, () => '', {
           addListener: () => {},
         });
-      }).toThrowError('Invariant Violation: addListener requires removeListener');
+      }).toThrowError('addListener requires removeListener');
     });
   });
 

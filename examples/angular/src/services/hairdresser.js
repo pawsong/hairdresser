@@ -1,4 +1,4 @@
-import Hairdresser from '../../../../src/Hairdresser';
+import Hairdresser from '../../../../lib/Hairdresser';
 
 export default app => {
   app.factory('hairdresser', () => {

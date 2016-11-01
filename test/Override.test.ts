@@ -1,7 +1,9 @@
-import EventEmitter from 'eventemitter3';
+import { EventEmitter } from 'events';
 
 import Hairdresser from '../src/Hairdresser';
-import Controller, {CTRL_TYPE} from '../src/classes/Controller';
+import Controller, {CtrlType} from '../src/Controller';
+
+const _undefined: any = undefined;
 
 describe('Override', () => {
   it('should throw error when addListener option is passed without removeListener', () => {
@@ -10,20 +12,18 @@ describe('Override', () => {
       hairdresser.override({
         addListener: () => '',
       });
-    }).toThrowError('Invariant Violation: addListener requires removeListener');
+    }).toThrowError('addListener requires removeListener');
   });
 
   describe('listener', () => {
     it('should be listening if override contains active controllers', () => {
       const hairdresser = Hairdresser.create();
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
-      const addListener = jasmine.createSpy();
-      const removeListener = jasmine.createSpy();
+      const addListener = jasmine.createSpy('addListener');
+      const removeListener = jasmine.createSpy('removeListener');
 
       hairdresser.override({
         addListener,
@@ -46,12 +46,10 @@ describe('Override', () => {
 
       const hairdresser = Hairdresser.create();
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
-      const render = jasmine.createSpy();
+      const render = jasmine.createSpy('render');
       hairdresser.override({
         addListener: listener => emitter.addListener('event', listener),
         removeListener: listener => emitter.removeListener('event', listener),
@@ -96,8 +94,8 @@ describe('Override', () => {
       const override = hairdresser.override();
 
       expect(() => {
-        override.addController(CTRL_TYPE.TITLE, 'title');
-      }).toThrowError('Invariant Violation: render value for <title> must be a string');
+        override.addController(CtrlType.TITLE, 'title', _undefined, _undefined);
+      }).toThrowError('render value for <title> must be a string');
     });
 
     it('should throw error when addListener option is passed without removeListener', () => {
@@ -105,10 +103,10 @@ describe('Override', () => {
       const override = hairdresser.override();
 
       expect(() => {
-        override.addController(CTRL_TYPE.TITLE, 'title', {}, () => '', {
+        override.addController(CtrlType.TITLE, 'title', {}, () => '', {
           addListener: () => '',
         });
-      }).toThrowError('Invariant Violation: addListener requires removeListener');
+      }).toThrowError('addListener requires removeListener');
     });
 
     it('should override controller', () => {
@@ -116,7 +114,7 @@ describe('Override', () => {
       const override1 = hairdresser.override();
 
       // Default values
-      override1.addController(CTRL_TYPE.TITLE, 'title', {}, () => 'title1');
+      override1.addController(CtrlType.TITLE, 'title', {}, () => 'title1');
 
       const controller1 =  override1.getController('title');
       expect(controller1.render()).toBe('title1');
@@ -127,7 +125,7 @@ describe('Override', () => {
 
       // Override
       const override2 = hairdresser.override();
-      override2.addController(CTRL_TYPE.TITLE, 'title', {}, () => 'title2');
+      override2.addController(CtrlType.TITLE, 'title', {}, () => 'title2');
 
       const controller2 =  override2.getController('title');
       expect(controller2.render()).toBe('title2');
@@ -141,7 +139,7 @@ describe('Override', () => {
       const hairdresser = Hairdresser.create();
       const override = hairdresser.override();
 
-      const ret = override.addController(CTRL_TYPE.TITLE,
+      const ret = override.addController(CtrlType.TITLE,
                                          'title', {}, () => 'title2');
       expect(ret).toBe(override);
     });
@@ -271,16 +269,14 @@ describe('Override', () => {
     it('should trigger onUpdate for active controllers', () => {
       const hairdresser = Hairdresser.create();
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
-      const render1 = jasmine.createSpy();
+      const render1 = jasmine.createSpy('render1');
       const override1 = hairdresser.override().title(render1);
       expect(render1.calls.count()).toBe(1);
 
-      const render2 = jasmine.createSpy();
+      const render2 = jasmine.createSpy('render2');
       const override2 = hairdresser.override().title(render2);
       expect(render1.calls.count()).toBe(1);
       expect(render2.calls.count()).toBe(1);
@@ -296,16 +292,14 @@ describe('Override', () => {
 
     it('should do nothing when override is added before #render', () => {
       const hairdresser = Hairdresser.create();
-      const render1 = jasmine.createSpy();
+      const render1 = jasmine.createSpy('render1');
       const override1 = hairdresser.override().title(render1);
 
-      const render2 = jasmine.createSpy();
+      const render2 = jasmine.createSpy('render2');
       const override2 = hairdresser.override().title(render2);
 
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
       expect(render1.calls.count()).toBe(0);
@@ -353,13 +347,11 @@ describe('Override', () => {
       const hairdresser = Hairdresser.create();
       const override = hairdresser.override().title('');
 
-      const onUpdate = jasmine.createSpy();
-      const onStop = jasmine.createSpy();
+      const onUpdate = jasmine.createSpy('onUpdate');
+      const onStop = jasmine.createSpy('onStop');
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate,
-          onStop,
-        },
+        onUpdate,
+        onStop,
       });
       expect(onUpdate.calls.count()).toBe(1);
       expect(onStop.calls.count()).toBe(0);
@@ -372,12 +364,10 @@ describe('Override', () => {
     it('should trigger onUpdate for controllers being restored', () => {
       const hairdresser = Hairdresser.create();
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
-      const render = jasmine.createSpy();
+      const render = jasmine.createSpy('render');
       hairdresser.override().title(render);
       expect(render.calls.count()).toBe(1);
 
@@ -391,15 +381,13 @@ describe('Override', () => {
     it('should remove listener for controllers being stored', () => {
       const hairdresser = Hairdresser.create();
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
       hairdresser.override().title('');
 
-      const addListener = jasmine.createSpy();
-      const removeListener = jasmine.createSpy();
+      const addListener = jasmine.createSpy('addListener');
+      const removeListener = jasmine.createSpy('removeListener');
       const override = hairdresser.override().title('', {
         addListener,
         removeListener,
@@ -415,9 +403,7 @@ describe('Override', () => {
     it('should remove controllers which is not listening', () => {
       const hairdresser = Hairdresser.create();
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
       const override1 = hairdresser.override().title('');
@@ -449,9 +435,7 @@ describe('Override', () => {
       const controller2 = override2.getController('title');
 
       hairdresser._renderAndListen({
-        [CTRL_TYPE.TITLE]: {
-          onUpdate: controller => controller.render(),
-        },
+        onUpdate: controller => controller.render(),
       });
 
       expect(controller1.prev).toBe(undefined);

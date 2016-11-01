@@ -1,5 +1,3 @@
-/* eslint no-console: 0 */
-
 import _ from 'lodash';
 import fs from 'fs';
 import webpack from 'webpack';
@@ -15,10 +13,7 @@ const PORT = 8080;
 
 webpackConfig.output.path = '/';
 const server = new WebpackDevServer(webpack(webpackConfig), {
-  hot: true,
-  stats: {
-    colors: true,
-  },
+  stats: { colors: true },
   contentBase: false,
 });
 

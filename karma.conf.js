@@ -1,41 +1,67 @@
-/* eslint no-var: 0, vars-on-top: 0 */
-var browsers;
-var reporters;
-var webpackConfig;
+var coveralls = process.env.TEST_COVERALLS === 'true';
+var coverage = coveralls || process.env.TEST_COVERAGE === 'true';
 
-if (process.env.TEST_COVERALLS === 'true') {
-  // Coveralls report
+var browsers = ['PhantomJS'];
+var transform = [];
+var reporters = ['mocha'];
+
+if (coveralls) {
   browsers = ['ChromeTravisCI'];
-  reporters = ['mocha', 'coverage', 'coveralls'];
-  webpackConfig = require('./webpack/test-coverage.config');
-} else if (process.env.TEST_COVERAGE === 'true') {
-  // Local coverage report
-  browsers = ['PhantomJS'];
-  reporters = ['mocha', 'coverage'];
-  webpackConfig = require('./webpack/test-coverage.config');
-} else {
-  // Local test
-  browsers = ['PhantomJS'];
-  reporters = ['mocha'];
-  webpackConfig = require('./webpack/test.config');
 }
 
-module.exports = function(config) { // eslint-disable-line func-names
+if (coverage) {
+  transform = [
+    ['browserify-istanbul', {
+      ignore: ['**/node_modules/**', '**/test/**'],
+      defaultIgnore: true,
+      instrumenterConfig: { embedSource: true },
+    }],
+  ];
+
+  if (coveralls) {
+    reporters = ['mocha', 'coverage', 'remap-coverage', 'coveralls'];
+  } else {
+    reporters = ['mocha', 'coverage', 'remap-coverage'];
+  }
+}
+
+module.exports = function(config) {
   config.set({
+    basePath: './',
 
-    basePath: '',
-
-    frameworks: [
-      'jasmine',
-    ],
+    frameworks: ['browserify', 'jasmine'],
 
     files: [
       'node_modules/es5-shim/es5-shim.js',
-      'test/index.js',
+      'src/**/*.ts',
+      'test/**/*.ts',
     ],
 
     preprocessors: {
-      'test/index.js': ['webpack', 'sourcemap'],
+      '**/*.ts': ['browserify'],
+    },
+
+    browserify: {
+      debug: true,
+      plugin: ['tsify'],
+      transform: transform,
+    },
+
+    browsers: browsers,
+
+    reporters: reporters,
+
+    mochaReporter: {
+      output: 'autowatch',
+    },
+
+    coverageReporter: { type: 'in-memory' },
+
+    // define where to save final remaped coverage reports
+    remapCoverageReporter: {
+      'text-summary': null, // to show summary in console
+      html: './coverage/html',
+      cobertura: './coverage/cobertura.xml'
     },
 
     port: 9876,
@@ -76,28 +102,5 @@ module.exports = function(config) { // eslint-disable-line func-names
     captureTimeout: 60000,
 
     browserNoActivityTimeout: 45000,
-
-    mochaReporter: {
-      output: 'autowatch',
-    },
-
-    coverageReporter: {
-      dir: '.coverage',
-      reporters: [
-        { type: 'html' },
-        { type: 'lcovonly' },
-        { type: 'text' },
-      ],
-    },
-
-    webpackMiddleware: {
-      noInfo: true,
-    },
-
-    webpack: webpackConfig,
-
-    reporters: reporters,
-
-    browsers: browsers,
   });
 };

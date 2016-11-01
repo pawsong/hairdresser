@@ -23,7 +23,7 @@ describe('utils', () => {
       const generateId = createIdGenerator();
       expect(generateId).toEqual(jasmine.any(Function));
 
-      let ret;
+      let ret: number;
       ret = generateId();
       expect(ret).toBe(1);
 

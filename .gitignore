@@ -3,11 +3,9 @@
 .DS_Store
 npm-debug.log*
 node_modules
-
-# Cache
-.babel-cache/
+.vscode
 
 # Built files
-.coverage/
-.jsdoc/
-build/
+lib/
+coverage/
+docs/

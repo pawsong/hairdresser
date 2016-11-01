@@ -1,4 +1,4 @@
-import {CTRL_TYPE} from '../../../../src/classes/Controller';
+import {CtrlType} from '../../../../lib/Controller';
 import hljs from 'highlight.js/lib/highlight';
 
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
@@ -26,13 +26,10 @@ export function HeadMonitorCtrl($interval, $scope, $sce, $document, hairdresser)
   };
 
   hairdresser._renderAndListen({
-    [CTRL_TYPE.TITLE]: {
-      onUpdate: update,
-      onStop: update,
-    },
-    [CTRL_TYPE.ETC]: {
-      onUpdate: update,
-      onStop: update,
-    },
+    onUpdate: update,
+    onStop: update,
+  }, {
+    onUpdate: update,
+    onStop: update,
   });
 }

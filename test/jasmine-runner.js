@@ -1,4 +1,4 @@
-/* eslint no-var: 0, vars-on-top: 0 */
+require('ts-node/register');
 
 var Jasmine = require('jasmine');
 var SpecReporter = require('jasmine-spec-reporter');
@@ -10,10 +10,7 @@ jasmine.getEnv().addReporter(new SpecReporter());   // add jasmine-spec-reporter
 jrunner.loadConfig({
   'spec_dir': 'test',
   'spec_files': [
-    '*.test.js',
-  ],
-  'helpers': [
-    'support/setup.js',
+    '*.test.ts',
   ],
 });
 jrunner.execute();
