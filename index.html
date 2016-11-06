@@ -1,196 +1,335 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html class="default no-js">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Home</title>
-
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>hairdresser</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script src="assets/js/modernizr.js"></script>
 </head>
-
 <body>
-
-<div id="main">
-
-    <h1 class="page-title">Home</h1>
-
-    
-
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    <section>
-        <article><p><img src="https://raw.githubusercontent.com/pawsong/hairdresser/master/resources/logo.png" alt="logo.png" width="450px"></p>
-<p>  A universal js library for managing head DOM elements (title, link and meta)</p>
-<p>  Browser support includes every sane browser and IE8+. (IE8 with <a href="https://github.com/es-shims/es5-shim">es5-shim</a>)</p>
-<p>  <a href="https://npmjs.org/package/hairdresser"><img src="https://img.shields.io/npm/v/hairdresser.svg" alt="NPM Version"></a>
-  <a href="https://travis-ci.org/pawsong/hairdresser"><img src="https://img.shields.io/travis/pawsong/hairdresser/master.svg?label=linux" alt="Linux Build"></a>
-  <a href="https://ci.appveyor.com/project/pawsong/hairdresser"><img src="https://img.shields.io/appveyor/ci/pawsong/hairdresser/master.svg?label=windows" alt="Windows Build"></a>
-  <a href="https://coveralls.io/github/pawsong/hairdresser?branch=master"><img src="https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a></p>
-<p>  <a href="https://saucelabs.com/u/hairdresser"><img src="https://saucelabs.com/browser-matrix/hairdresser.svg" alt="Sauce Test Status"></a></p>
-<pre class="prettyprint source lang-javascript"><code>var hairdresser = Hairdresser.create();
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">hairdresser</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> hairdresser</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><img src="https://raw.githubusercontent.com/pawsong/hairdresser/master/resources/logo.png" alt="logo.png" width="450px"></p>
+				<p>  A universal js library for managing head DOM elements (title, link and meta)</p>
+				<p>  Browser support includes every sane browser and IE8+. (IE8 with <a href="https://github.com/es-shims/es5-shim">es5-shim</a>)</p>
+				<p>  <a href="https://npmjs.org/package/hairdresser"><img src="https://img.shields.io/npm/v/hairdresser.svg" alt="NPM Version"></a>
+					<a href="https://travis-ci.org/pawsong/hairdresser"><img src="https://img.shields.io/travis/pawsong/hairdresser/master.svg?label=linux" alt="Linux Build"></a>
+					<a href="https://ci.appveyor.com/project/pawsong/hairdresser"><img src="https://img.shields.io/appveyor/ci/pawsong/hairdresser/master.svg?label=windows" alt="Windows Build"></a>
+				<a href="https://coveralls.io/github/pawsong/hairdresser?branch=master"><img src="https://coveralls.io/repos/pawsong/hairdresser/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a></p>
+				<p>  <a href="https://saucelabs.com/u/hairdresser"><img src="https://saucelabs.com/browser-matrix/hairdresser.svg" alt="Sauce Test Status"></a></p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> hairdresser = Hairdresser.create();
 hairdresser.override()
-  .title('Hairdresser')
-  .meta({ property: 'og:title' }, { content: 'Hairdresser' });
+  .title(<span class="hljs-string">'Hairdresser'</span>)
+  .meta({ <span class="hljs-attr">property</span>: <span class="hljs-string">'og:title'</span> }, { <span class="hljs-attr">content</span>: <span class="hljs-string">'Hairdresser'</span> });
 
-hairdresser.render();</code></pre><h1>Features</h1><ul>
-<li>Manages <code>&lt;head&gt;</code>'s child elements (ex. <code>&lt;title&gt;</code>, <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code>)</li>
-<li>Hierarchical state friendly API</li>
-<li>Server-side rendering</li>
-</ul>
-<h1>Motivation</h1><h2>Independence from framework</h2><p>There are already good projects for managing <code>&lt;title&gt;</code>, <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code> elements. Following are some of the projects:</p>
-<ul>
-<li><a href="https://github.com/apparentlymart/angularjs-viewhead">angularjs-viewhead</a></li>
-<li><a href="https://github.com/iktw/ngPageHeadMeta">ngPageHeadMeta</a></li>
-<li><a href="https://github.com/nfl/react-helmet">react-helmet</a></li>
-<li><a href="https://github.com/gaearon/react-document-title">react-document-title</a></li>
-<li><a href="https://github.com/didacte/ember-meta-meta">ember-meta-meta</a></li>
-</ul>
-<p>Most of the projects depend on client-side frameworks like AngularJS or ReactJS. Using frameworks can make code shorter and simpler, but it also costs flexibility and maintainability. I think the cost exceeds the benefit. There are good framework independent libraries for <a href="https://github.com/RubaXa/Sortable">sortable UI </a> and <a href="https://github.com/bevacqua/dragula">drag and drop</a>. Why not for <code>&lt;head&gt;</code> manipulation?</p>
-<h2>Hierarchical state friendly API</h2><p>As <code>&lt;head&gt;</code>'s child elements represent state of the app, <code>&lt;head&gt;</code> manager should receive state change events and change <code>&lt;head&gt;</code> rendering function properly. For example, an app uses app name for <code>&lt;title&gt;</code> on root state, and uses title of the article for <code>&lt;title&gt;</code> on article showing state.</p>
-<p>In most cases, app uses hierarchical state like this:</p>
-<blockquote>
-<p>Root &gt; Category &gt; Sub category &gt; Article List</p>
-</blockquote>
-<p>Hierarchical architecture is popular (ex. file system), and can take advantage of URL's hierarchical representation. In fact, the strength of hierarchical state is not important. The thing is, hierarchical state is common for web apps and <code>&lt;head&gt;</code> manager should offer hierarchical state friendly API.</p>
-<h1>How to use</h1><h2>1. Get started with default values</h2><p>Let's start by creating a Hairdresser instance.</p>
-<pre class="prettyprint source lang-javascript"><code>// With new operator
-var hairdresser = new Hairdresser();
+hairdresser.render();
+</code></pre>
+				<h1 id="features">Features</h1>
+				<ul>
+					<li>Manages <code>&lt;head&gt;</code>&#39;s child elements (ex. <code>&lt;title&gt;</code>, <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code>)</li>
+					<li>Hierarchical state friendly API</li>
+					<li>Server-side rendering</li>
+				</ul>
+				<h1 id="motivation">Motivation</h1>
+				<h2 id="independence-from-framework">Independence from framework</h2>
+				<p>There are already good projects for managing <code>&lt;title&gt;</code>, <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code> elements. Following are some of the projects:</p>
+				<ul>
+					<li><a href="https://github.com/apparentlymart/angularjs-viewhead">angularjs-viewhead</a></li>
+					<li><a href="https://github.com/iktw/ngPageHeadMeta">ngPageHeadMeta</a></li>
+					<li><a href="https://github.com/nfl/react-helmet">react-helmet</a></li>
+					<li><a href="https://github.com/gaearon/react-document-title">react-document-title</a></li>
+					<li><a href="https://github.com/didacte/ember-meta-meta">ember-meta-meta</a></li>
+				</ul>
+				<p>Most of the projects depend on client-side frameworks like AngularJS or ReactJS. Using frameworks can make code shorter and simpler, but it also costs flexibility and maintainability. I think the cost exceeds the benefit. There are good framework independent libraries for <a href="https://github.com/RubaXa/Sortable">sortable UI </a> and <a href="https://github.com/bevacqua/dragula">drag and drop</a>. Why not for <code>&lt;head&gt;</code> manipulation?</p>
+				<h2 id="hierarchical-state-friendly-api">Hierarchical state friendly API</h2>
+				<p>As <code>&lt;head&gt;</code>&#39;s child elements represent state of the app, <code>&lt;head&gt;</code> manager should receive state change events and change <code>&lt;head&gt;</code> rendering function properly. For example, an app uses app name for <code>&lt;title&gt;</code> on root state, and uses title of the article for <code>&lt;title&gt;</code> on article showing state.</p>
+				<p>In most cases, app uses hierarchical state like this:</p>
+				<blockquote>
+					<p>Root &gt; Category &gt; Sub category &gt; Article List</p>
+				</blockquote>
+				<p>Hierarchical architecture is popular (ex. file system), and can take advantage of URL&#39;s hierarchical representation. In fact, the strength of hierarchical state is not important. The thing is, hierarchical state is common for web apps and <code>&lt;head&gt;</code> manager should offer hierarchical state friendly API.</p>
+				<h1 id="how-to-use">How to use</h1>
+				<h2 id="1-get-started-with-default-values">1. Get started with default values</h2>
+				<p>Let&#39;s start by creating a Hairdresser instance.</p>
+				<pre><code class="lang-javascript"><span class="hljs-comment">// With new operator</span>
+<span class="hljs-keyword">var</span> hairdresser = <span class="hljs-keyword">new</span> Hairdresser();
 
-// Or with static function
-var hairdresser = Hairdresser.create();</code></pre><p>Hairdresser manages one controller per DOM element in an override fashion. A controller defines when and how to render an element. To set default values, just call <code>hairdresser.override</code> and pass <code>render</code> parameter per element. <code>render</code> parameter is the first parameter of <code>title</code> method and the second parameter of <code>meta</code> and <code>link</code> methods.</p>
-<pre class="prettyprint source lang-javascript"><code>hairdresser.override()
-  .title('Hairdresser')
-  .meta({ name: 'title' }, { content: 'Hairdresser' })
-  .link({ rel: 'canonical' }, { href: 'https://example.com' });</code></pre><p>This is <code>&lt;head&gt;</code> inner HTML that the above code expects.</p>
-<pre class="prettyprint source lang-html"><code>&lt;!-- Alphabetical order -->
-&lt;link rel=&quot;canonical&quot; href=&quot;https://example.com&quot;>&lt;/meta>
-&lt;meta name=&quot;title&quot; content=&quot;Hairdresser&quot;>&lt;/meta>
-&lt;title>Hairdresser&lt;/title></code></pre><p><code>render</code> parameter can be a value which replaces element content or a function that returns the element replacing value. For example, following two examples change element in the same way.</p>
-<pre class="prettyprint source lang-javascript"><code>// Example1 - Use static primitive string value.
+<span class="hljs-comment">// Or with static function</span>
+<span class="hljs-keyword">var</span> hairdresser = Hairdresser.create();
+</code></pre>
+				<p>Hairdresser manages one controller per DOM element in an override fashion. A controller defines when and how to render an element. To set default values, just call <code>hairdresser.override</code> and pass <code>render</code> parameter per element. <code>render</code> parameter is the first parameter of <code>title</code> method and the second parameter of <code>meta</code> and <code>link</code> methods.</p>
+				<pre><code class="lang-javascript">hairdresser.override()
+  .title(<span class="hljs-string">'Hairdresser'</span>)
+  .meta({ <span class="hljs-attr">name</span>: <span class="hljs-string">'title'</span> }, { <span class="hljs-attr">content</span>: <span class="hljs-string">'Hairdresser'</span> })
+  .link({ <span class="hljs-attr">rel</span>: <span class="hljs-string">'canonical'</span> }, { <span class="hljs-attr">href</span>: <span class="hljs-string">'https://example.com'</span> });
+</code></pre>
+				<p>This is <code>&lt;head&gt;</code> inner HTML that the above code expects.</p>
+				<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- Alphabetical order --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"canonical"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://example.com"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">content</span>=<span class="hljs-string">"Hairdresser"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">meta</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hairdresser<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+</code></pre>
+				<p><code>render</code> parameter can be a value which replaces element content or a function that returns the element replacing value. For example, following two examples change element in the same way.</p>
+				<pre><code class="lang-javascript"><span class="hljs-comment">// Example1 - Use static primitive string value.</span>
 hairdresser.override()
-  .title('Hairdresser');
+  .title(<span class="hljs-string">'Hairdresser'</span>);
 
-// Example2 - Use dynamic function return value.
+<span class="hljs-comment">// Example2 - Use dynamic function return value.</span>
 hairdresser.override()
-  .title(function () {
-    return 'Hairdresser';
-  });</code></pre><p>As for <code>&lt;title&gt;</code>, there is no need of a selector because only one <code>&lt;title&gt;</code> can exist. <code>render</code> parameter of <code>&lt;title&gt;</code> should be or return a string value because title is string.</p>
-<p>In case of <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code>, there can be multiple elements with the same tag name in DOM, so a selector is required. The first argument of <code>meta</code> and <code>link</code> function is the selector, which represents key-value attribute pairs. Similarly, <code>render</code> parameter of <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code> should be or return an object as key-value attribute pairs.</p>
-<p>Now we should call <code>hairdresser.render</code> in order to make Hairdresser start manipulating DOM.</p>
-<pre class="prettyprint source lang-javascript"><code>hairdresser.render();</code></pre><h2>2. Override controllers on state transition</h2><p>When application state changes, you may want to change a controller to handle an element. For example, you want to set <code>&lt;title&gt;</code> to the default value on the main page, and want to set <code>&lt;title&gt;</code> to article title on article page. Then, you can override the controller for <code>&lt;title&gt;</code> like this:</p>
-<pre class="prettyprint source lang-javascript"><code>var article = {
-  title: 'My awesome article'
+  .title(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Hairdresser'</span>;
+  });
+</code></pre>
+				<p>As for <code>&lt;title&gt;</code>, there is no need of a selector because only one <code>&lt;title&gt;</code> can exist. <code>render</code> parameter of <code>&lt;title&gt;</code> should be or return a string value because title is string.</p>
+				<p>In case of <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code>, there can be multiple elements with the same tag name in DOM, so a selector is required. The first argument of <code>meta</code> and <code>link</code> function is the selector, which represents key-value attribute pairs. Similarly, <code>render</code> parameter of <code>&lt;meta&gt;</code> and <code>&lt;link&gt;</code> should be or return an object as key-value attribute pairs.</p>
+				<p>Now we should call <code>hairdresser.render</code> in order to make Hairdresser start manipulating DOM.</p>
+				<pre><code class="lang-javascript">hairdresser.render();
+</code></pre>
+				<h2 id="2-override-controllers-on-state-transition">2. Override controllers on state transition</h2>
+				<p>When application state changes, you may want to change a controller to handle an element. For example, you want to set <code>&lt;title&gt;</code> to the default value on the main page, and want to set <code>&lt;title&gt;</code> to article title on article page. Then, you can override the controller for <code>&lt;title&gt;</code> like this:</p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> article = {
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'My awesome article'</span>
 };
 
-var override = hairdresser.override()
-  .title(function () {
-    return article.title;
+<span class="hljs-keyword">var</span> override = hairdresser.override()
+  .title(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> article.title;
   });
 
-// Cancel override on leaving the article page.
-onLeaveState(function () {
+<span class="hljs-comment">// Cancel override on leaving the article page.</span>
+onLeaveState(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
   override.restore();
-});</code></pre><p>Now <code>&lt;title&gt;</code> is set to article's title, <code>My awesome article</code>. You can go back to the previous controller by calling <code>restore</code> method.</p>
-<p>In case of hierarchical state, you can override a controller multiple times when you traverse down multiple child states.</p>
-<h2>3. Trigger update</h2><p>You can update <code>&lt;head&gt;</code> element in two ways.</p>
-<p>One is manual function call. <code>override.update</code> updates all the elements in <code>override</code>.</p>
-<pre class="prettyprint source lang-javascript"><code>var override = hairdresser.override()
+});
+</code></pre>
+				<p>Now <code>&lt;title&gt;</code> is set to article&#39;s title, <code>My awesome article</code>. You can go back to the previous controller by calling <code>restore</code> method.</p>
+				<p>In case of hierarchical state, you can override a controller multiple times when you traverse down multiple child states.</p>
+				<h2 id="3-trigger-update">3. Trigger update</h2>
+				<p>You can update <code>&lt;head&gt;</code> element in two ways.</p>
+				<p>One is manual function call. <code>override.update</code> updates all the elements in <code>override</code>.</p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> override = hairdresser.override()
   .title(getTitle);
 
-onDataReceived(function () {
+onDataReceived(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
 
-  // Manual update
+  <span class="hljs-comment">// Manual update</span>
   override.update();
-});</code></pre><p>The other one is using event listeners. A listener can be added to <code>override</code> and each element.</p>
-<p>Many event emitter's listener adding functions return listener removing function. For those cases, to manage the removing function in a simple way, the return value of addListener is passed to removeListener as the second parameter.</p>
-<pre class="prettyprint source lang-javascript"><code>// Use fbemitter (https://github.com/facebook/emitter)
-var emitter = new EventEmitter();
+});
+</code></pre>
+				<p>The other one is using event listeners. A listener can be added to <code>override</code> and each element.</p>
+				<p>Many event emitter&#39;s listener adding functions return listener removing function. For those cases, to manage the removing function in a simple way, the return value of addListener is passed to removeListener as the second parameter.</p>
+				<pre><code class="lang-javascript"><span class="hljs-comment">// Use fbemitter (https://github.com/facebook/emitter)</span>
+<span class="hljs-keyword">var</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
 
-// Listener per override
-var override = hairdresser.override({
-  addListener: function (listener) {
-    return emitter.addListener('update.override', listener);
+<span class="hljs-comment">// Listener per override</span>
+<span class="hljs-keyword">var</span> override = hairdresser.override({
+  <span class="hljs-attr">addListener</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">listener</span>) </span>{
+    <span class="hljs-keyword">return</span> emitter.addListener(<span class="hljs-string">'update.override'</span>, listener);
   },
-  removeListener: function (listener, token) {
+  <span class="hljs-attr">removeListener</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">listener, token</span>) </span>{
     token.remove();
   },
 }).title(getTitle);
 
-emitter.emit('update.override');
+emitter.emit(<span class="hljs-string">'update.override'</span>);
 
-// Listener per element
-var override = hairdresser.override()
+<span class="hljs-comment">// Listener per element</span>
+<span class="hljs-keyword">var</span> override = hairdresser.override()
   .title(getTitle, {
-    addListener: function (listener) {
-      return emitter.addListener('update.title', listener);
+    <span class="hljs-attr">addListener</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">listener</span>) </span>{
+      <span class="hljs-keyword">return</span> emitter.addListener(<span class="hljs-string">'update.title'</span>, listener);
     },
-    removeListener: function (listener, token) {
+    <span class="hljs-attr">removeListener</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">listener, token</span>) </span>{
       token.remove();
     });
   });
 
-emitter.emit('update.title');</code></pre><h2>4. Render to DOM or string</h2><p>This library is <a href="https://medium.com/@mjackson/universal-javascript-4761051b7ae9">universal</a>. You can modify <code>&lt;head&gt;</code> DOM element on browser.</p>
-<pre class="prettyprint source lang-javascript"><code>var hairdresser = Hairdresser.create();
-hairdresser.override().title('Hairdresser');
+emitter.emit(<span class="hljs-string">'update.title'</span>);
+</code></pre>
+				<h2 id="4-render-to-dom-or-string">4. Render to DOM or string</h2>
+				<p>This library is <a href="https://medium.com/@mjackson/universal-javascript-4761051b7ae9">universal</a>. You can modify <code>&lt;head&gt;</code> DOM element on browser.</p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> hairdresser = Hairdresser.create();
+hairdresser.override().title(<span class="hljs-string">'Hairdresser'</span>);
 
-// render() will render `&lt;head>` DOM element,
-// and watch further overrides.
-hairdresser.render();</code></pre><p>You can also get elements as a string value.</p>
-<pre class="prettyprint source lang-javascript"><code>var hairdresser = Hairdresser.create();
-hairdresser.override().title('Hairdresser');
+<span class="hljs-comment">// render() will render `&lt;head&gt;` DOM element,</span>
+<span class="hljs-comment">// and watch further overrides.</span>
+hairdresser.render();
+</code></pre>
+				<p>You can also get elements as a string value.</p>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> hairdresser = Hairdresser.create();
+hairdresser.override().title(<span class="hljs-string">'Hairdresser'</span>);
 
-var head = hairdresser.renderToString();
-assert(head === '&lt;title>Hairdresser&lt;/title>');</code></pre><h1>API</h1><p>Refer to <a href="https://pawsong.github.io/hairdresser">API documentation</a></p>
-<h1>Roadmap</h1><p>Refer to <a href="/ROADMAP.md">Roadmap documentation</a></p>
-<h1>Examples</h1><ul>
-<li><a href="/examples/angular">angular</a></li>
-<li><a href="/examples/react">react</a></li>
-</ul>
-<h1>License</h1><p>MIT</p></article>
-    </section>
-
-
-
-
-
-
+<span class="hljs-keyword">var</span> head = hairdresser.renderToString();
+assert(head === <span class="hljs-string">'&lt;title&gt;Hairdresser&lt;/title&gt;'</span>);
+</code></pre>
+				<h1 id="api">API</h1>
+				<p>Refer to <a href="https://pawsong.github.io/hairdresser">API documentation</a></p>
+				<h1 id="roadmap">Roadmap</h1>
+				<p>Refer to <a href="/ROADMAP.md">Roadmap documentation</a></p>
+				<h1 id="examples">Examples</h1>
+				<ul>
+					<li><a href="/examples/angular">angular</a></li>
+					<li><a href="/examples/react">react</a></li>
+				</ul>
+				<h1 id="license">License</h1>
+				<p>MIT</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_attrs_.html">"<wbr>Attrs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_controller_.html">"<wbr>Controller"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_eventmanager_.html">"<wbr>Event<wbr>Manager"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_hairdresser_.html">"<wbr>Hairdresser"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_override_.html">"<wbr>Override"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_.html">"utils"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Controller.html">Controller</a></li><li><a href="Hairdresser.html">Hairdresser</a></li><li><a href="Override.html">Override</a></li></ul><h3><a href="global.html">Global</a></h3>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0-dev</a> on Tue Nov 03 2015 00:00:03 GMT+0900 (KST)
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
 </footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
