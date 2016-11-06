@@ -147,28 +147,30 @@ describe('Hairdresser', () => {
       }
     }
 
-    function getSortedHeadString() {
-      const children: Element[] = [];
-      for (let i = 0; i < head.children.length; ++i) {
-        children.push(head.children[i]);
+    function getSortedElementString(element: Element) {
+      if (element.tagName === 'TITLE') {
+        return `<title>${document.title}</title>`;
       }
-      return children.map(child => {
-        if (child.tagName === 'TITLE') {
-          return `<title>${document.title}</title>`;
-        }
 
-        if (oldHeadChildren.indexOf(child) >= 0) {
-          return '';
-        }
+      if (oldHeadChildren.indexOf(element) >= 0) {
+        return '';
+      }
 
-        const attribs: string[] = [];
-        for (let i = 0; i < child.attributes.length; ++i) {
-          const attrib = child.attributes[i];
-          attribs.push(`${attrib.name}="${attrib.value}"`);
-        }
+      const attribs: string[] = [];
+      for (let i = 0; i < element.attributes.length; ++i) {
+        const attrib = element.attributes[i];
+        attribs.push(`${attrib.name}="${attrib.value}"`);
+      }
 
-        return `<${child.tagName.toLowerCase()} ${attribs.sort().join(' ')}>`;
-      }).sort().join('');
+      return `<${element.tagName.toLowerCase()} ${attribs.sort().join(' ')}>`;
+    }
+
+    function getSortedChildrenString(element: Element) {
+      const children: Element[] = [];
+      for (let i = 0; i < element.children.length; ++i) {
+        children.push(element.children[i]);
+      }
+      return children.map(getSortedElementString).sort().join('');
     }
 
     beforeEach(() => {
@@ -231,7 +233,7 @@ describe('Hairdresser', () => {
       hairdresser.render();
 
       // Alphabetical order
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="link value" key="value">' +
         '<meta content="meta value" key="value">' +
         '<ta key="key1" value="value1">' +
@@ -251,7 +253,7 @@ describe('Hairdresser', () => {
         .tag('ta', { key: 'key1' }, { value: 'value1' })
         .tag('tb', { key: 'key1' }, { value: 'value1' }, { close: true });
 
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         // Override method call order
         '<link content="link value" key="value">' +
         '<meta content="meta value" key="value">' +
@@ -267,7 +269,7 @@ describe('Hairdresser', () => {
         .tag('ta', { key: 'key1' }, { value: 'value2' })
         .tag('tb', { key: 'key1' }, { value: 'value2' }, { close: true });
 
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="overridden link value" key="value">' +
         '<meta content="overridden meta value" key="value">' +
         '<ta key="key1" value="value2">' +
@@ -291,11 +293,11 @@ describe('Hairdresser', () => {
       expect(stopRendering).toEqual(jasmine.any(Function));
 
       stopRendering();
-      expect(getSortedHeadString()).toBe('<title>change me</title>');
+      expect(getSortedChildrenString(head)).toBe('<title>change me</title>');
 
       // Override does not affect DOM after stop
       hairdresser.override().title('I do nothing');
-      expect(getSortedHeadString()).toBe('<title>change me</title>');
+      expect(getSortedChildrenString(head)).toBe('<title>change me</title>');
     });
 
     it('should update elements when override listener receives event', () => {
@@ -320,7 +322,7 @@ describe('Hairdresser', () => {
         .tag('ta', { key: 'key1' }, () => ({ value: ta }))
         .tag('tb', { key: 'key1' }, () => ({ value: tb }), { close: true });
 
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="old link" key="value">' +
         '<meta content="old meta" key="value">' +
         '<ta key="key1" value="old ta">' +
@@ -335,7 +337,7 @@ describe('Hairdresser', () => {
       tb = 'new tb';
 
       emitter.emit('override');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="new link" key="value">' +
         '<meta content="new meta" key="value">' +
         '<ta key="key1" value="new ta">' +
@@ -378,7 +380,7 @@ describe('Hairdresser', () => {
           removeListener: listener => emitter.removeListener('tb', listener),
         });
 
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="old link" key="value">' +
         '<meta content="old meta" key="value">' +
         '<ta content="old ta" key="value">' +
@@ -393,7 +395,7 @@ describe('Hairdresser', () => {
       tb = 'new tb';
 
       emitter.emit('title');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="old link" key="value">' +
         '<meta content="old meta" key="value">' +
         '<ta content="old ta" key="value">' +
@@ -402,7 +404,7 @@ describe('Hairdresser', () => {
       );
 
       emitter.emit('meta');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="old link" key="value">' +
         '<meta content="new meta" key="value">' +
         '<ta content="old ta" key="value">' +
@@ -411,7 +413,7 @@ describe('Hairdresser', () => {
       );
 
       emitter.emit('link');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="new link" key="value">' +
         '<meta content="new meta" key="value">' +
         '<ta content="old ta" key="value">' +
@@ -420,7 +422,7 @@ describe('Hairdresser', () => {
       );
 
       emitter.emit('ta');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="new link" key="value">' +
         '<meta content="new meta" key="value">' +
         '<ta content="new ta" key="value">' +
@@ -429,7 +431,7 @@ describe('Hairdresser', () => {
       );
 
       emitter.emit('tb');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<link content="new link" key="value">' +
         '<meta content="new meta" key="value">' +
         '<ta content="new ta" key="value">' +
@@ -450,7 +452,7 @@ describe('Hairdresser', () => {
           removeListener: listener => emitter.removeListener('meta', listener),
         });
 
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<meta content="meta" key="value">' +
         '<title></title>'
       );
@@ -459,7 +461,7 @@ describe('Hairdresser', () => {
       resetHead();
 
       emitter.emit('meta');
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<meta content="meta" key="value">' +
         '<title></title>'
       );
@@ -468,7 +470,7 @@ describe('Hairdresser', () => {
       resetHead();
 
       override.restore();
-      expect(getSortedHeadString()).toBe(
+      expect(getSortedChildrenString(head)).toBe(
         '<title></title>'
       );
     });
@@ -482,9 +484,9 @@ describe('Hairdresser', () => {
         const hairdresser = Hairdresser.create();
         hairdresser.render('#root');
         hairdresser.override()
-          .meta({ key: 'value' }, { content: 'meta value' });
+          .meta({ key: 'value' }, { content: 'meta' });
 
-        expect(rootElement.innerHTML).toBe('<meta key="value" content="meta value">');
+        expect(getSortedChildrenString(rootElement)).toBe('<meta content="meta" key="value">');
       });
     });
 
@@ -496,9 +498,9 @@ describe('Hairdresser', () => {
         const hairdresser = Hairdresser.create();
         hairdresser.render(rootElement);
         hairdresser.override()
-          .meta({ key: 'value' }, { content: 'meta value' });
+          .meta({ key: 'value' }, { content: 'meta' });
 
-        expect(rootElement.innerHTML).toBe('<meta key="value" content="meta value">');
+        expect(getSortedChildrenString(rootElement)).toBe('<meta content="meta" key="value">');
       });
     });
   });
