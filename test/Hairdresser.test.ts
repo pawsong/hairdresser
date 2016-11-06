@@ -472,5 +472,34 @@ describe('Hairdresser', () => {
         '<title></title>'
       );
     });
+
+    describe('with string parameter', () => {
+      it('should append output to element selected with given string', () => {
+        const rootElement = document.createElement('div');
+        rootElement.id = 'root';
+        document.body.appendChild(rootElement);
+
+        const hairdresser = Hairdresser.create();
+        hairdresser.render('#root');
+        hairdresser.override()
+          .meta({ key: 'value' }, { content: 'meta value' });
+
+        expect(rootElement.innerHTML).toBe('<meta key="value" content="meta value">');
+      });
+    });
+
+    describe('with HtmlElement parameter', () => {
+      it('should append output to given element', () => {
+        const rootElement = document.createElement('div');
+        document.body.appendChild(rootElement);
+
+        const hairdresser = Hairdresser.create();
+        hairdresser.render(rootElement);
+        hairdresser.override()
+          .meta({ key: 'value' }, { content: 'meta value' });
+
+        expect(rootElement.innerHTML).toBe('<meta key="value" content="meta value">');
+      });
+    });
   });
 });

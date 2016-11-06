@@ -114,21 +114,31 @@ export default class Hairdresser {
   }
 
   /**
-   * Renders HTML elements into the DOM in the `<head>` element,
-   * and watch further changes of the hairdresser instance.
+   * Renders HTML elements into the DOM and watch further changes
+   * of the hairdresser instance.
    *
+   * @param {string | HTMLElement} selectorOrElement HTMLElement instance or
+   * a selector to find an HTMLElement to append rendered elements to.
+   * Defaults to the `<head>` element.
    * @return {function} Restore changes and stop watching the hairdresser
    * instance function.
    */
-  public render() {
+  public render(selectorOrElement?: string | HTMLElement) {
     invariant(canUseDOM(),
               'Cannot use DOM object. ' +
               'Make sure `window` and `document` are available globally.');
 
-    const head = document.getElementsByTagName('head')[0];
+    let rootElement: Element;
+    if (!selectorOrElement) {
+      rootElement = document.getElementsByTagName('head')[0];
+    } else if (typeof selectorOrElement === 'string') {
+      rootElement = document.querySelector(selectorOrElement);
+    } else {
+      rootElement = selectorOrElement;
+    }
 
     function isElementCacheValid(elem: Element, attrs: Attrs) {
-      if (elem.parentNode !== head) {
+      if (elem.parentNode !== rootElement) {
         return false;
       }
       return attrs.each((name, value) => elem.getAttribute(name) === value);
@@ -156,7 +166,7 @@ export default class Hairdresser {
         return element;
       }
 
-      element = head.querySelector(`${controller.selector}`);
+      element = rootElement.querySelector(`${controller.selector}`);
 
       if (element) {
         cachedElem[controller.id] = element;
@@ -168,7 +178,7 @@ export default class Hairdresser {
         element.setAttribute(name, value);
         return true;
       });
-      head.appendChild(element);
+      rootElement.appendChild(element);
 
       cachedElem[controller.id] = element;
       return element;
