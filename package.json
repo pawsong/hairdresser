@@ -1,6 +1,6 @@
 {
   "name": "hairdresser",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A universal js library for managing head DOM elements (title, link, and meta)",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
