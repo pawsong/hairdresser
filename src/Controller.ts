@@ -75,6 +75,8 @@ class Controller<T> implements LinkedListNode<Controller<T>> {
   addListener: AddListener;
   removeListener: RemoveListener;
 
+  _originalElement: Node;
+
   /**
    * Controller constructor.
    *

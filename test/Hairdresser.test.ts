@@ -475,6 +475,32 @@ describe('Hairdresser', () => {
       );
     });
 
+    it('should preserve exisitng data', () => {
+      const meta = document.createElement('meta');
+      meta.setAttribute('key', 'value');
+      meta.setAttribute('content', 'original value');
+      meta.setAttribute('custom', 'field');
+      head.appendChild(meta);
+
+      const hairdresser = Hairdresser.create();
+      hairdresser.render();
+
+      const override = hairdresser.override()
+        .meta({ key: 'value' }, { content: 'meta' });
+
+      expect(getSortedChildrenString(head)).toBe(
+        '<meta content="meta" custom="field" key="value">' +
+        '<title></title>'
+      );
+
+      override.restore();
+
+      expect(getSortedChildrenString(head)).toBe(
+        '<meta content="original value" custom="field" key="value">' +
+        '<title></title>'
+      );
+    });
+
     describe('with string parameter', () => {
       it('should append output to element selected with given string', () => {
         const rootElement = document.createElement('div');

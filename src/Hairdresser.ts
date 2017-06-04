@@ -144,6 +144,7 @@ export default class Hairdresser {
       return attrs.each((name, value) => elem.getAttribute(name) === value);
     }
 
+    // TODO: Do you have to use selector to index cached elements?
     const cachedElem: { [index: string]: Element } = {};
 
     function getElement<T>(controller: Controller<T>) {
@@ -169,6 +170,7 @@ export default class Hairdresser {
       element = rootElement.querySelector(`${controller.selector}`);
 
       if (element) {
+        controller._originalElement = element.cloneNode();
         cachedElem[controller.id] = element;
         return element;
       }
@@ -215,6 +217,9 @@ export default class Hairdresser {
         if (!controller.prev && !controller.next) {
           const element = getElement(controller);
           if (element) {
+            if (controller._originalElement) {
+              element.parentNode.appendChild(controller._originalElement);
+            }
             element.parentNode.removeChild(element);
           }
         }
